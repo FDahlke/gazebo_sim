@@ -23,16 +23,16 @@
             filename="gz-sim-scene-broadcaster-system"
             name="gz::sim::systems::SceneBroadcaster">
         </plugin>
-  
-        <plugin
-            filename="Person"
-            name="Person">
-            <model_name>person</model_name>
-            <model_pose>idle</model_pose>
-            <pose>-3 3 0 0 0 0</pose>
-            <scale>0.02</scale>
-        </plugin>
-
+		<!--
+		<plugin
+			filename="Person"
+			name="Person">
+			<model_name>person</model_name>
+			<model_pose>idle</model_pose>
+			<pose>-3 3 0 0 0 0</pose>
+			<scale>0.02</scale>
+		</plugin>
+		-->
         <plugin
             filename="Forest"
             name="Forest">
@@ -40,8 +40,8 @@
             <seed>0</seed>
             <ground_texture>0</ground_texture>
             <generate>true</generate>
-            <size>100</size>
-            <trees>5</trees>
+            <size>10</size>
+            <trees>2</trees>
             <ground_temperature>288.15</ground_temperature>
             <texture_size>1</texture_size>
             <species name="None">

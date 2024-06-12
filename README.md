@@ -1,3 +1,5 @@
+### A fork to test a Rolling Horizon Evolutioary Algorithm for finding missing people in densely occluded environments for my Bachelor Thesis
+
 # Installation
 
 ## Apptainer
