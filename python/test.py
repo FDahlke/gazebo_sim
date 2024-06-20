@@ -90,7 +90,7 @@ def crossover(parent1, parent2):
 
 # Create the swarm object by passing the name
 # of the world from the .sdf world file.
-swarm = Swarm("rhel_swarm")
+swarm = Swarm("rhea_swarm")
 #person = Person("rhel_swarm")
 
 # Spawn X drones and keep the returning ids as handles
