@@ -12,7 +12,7 @@ import numpy as np
 
 from swarm import Swarm
 
-from scipy.spatial import distance
+#from scipy.spatial import distance
 
 
 # In[13]:
@@ -26,11 +26,20 @@ process = Popen(['gz','sim', '../worlds/RHEA_swarm_DenseForest.sdf', '-r','-s'],
 
 time.sleep(15)
 
-
-# In[14]:
-
-
 NUM_DRONES = 5
+POPULATION_SIZE = 10
+NUM_GENERATIONS = 2
+MUTATION_RATE = 0.1
+
+swarm = Swarm("rhea_swarm")
+
+# Spawn X drones and keep the returning ids as handles
+ids = swarm.spawn(NUM_DRONES*POPULATION_SIZE)
+
+
+
+
+
 
 AREA_SIZE_X = 100
 AREA_SIZE_Y = 100
@@ -42,9 +51,6 @@ IMAGE_SIZE = 512 #How many Scanning points each image has per Row (Images are 51
 MOVE_DISTANCE = 1       # How far a Drone can move each Timestep
 DRONE_HEIGHT = 35
 
-POPULATION_SIZE = 10
-NUM_GENERATIONS = 2
-MUTATION_RATE = 0.1
 
 INITIAL_VISIBILITY =0.5
 
@@ -118,13 +124,7 @@ def update_Target_Position():
 
 # Create the swarm object by passing the name
 # of the world from the .sdf world file.
-swarm = Swarm("rhea_swarm")
 
-print("Test")
-
-# Spawn X drones and keep the returning ids as handles
-#ids = swarm.spawn(NUM_DRONES)
-ids = swarm.spawn(NUM_DRONES*POPULATION_SIZE)
 
 #Initialize Target Position
 Target_Position =np.array([20,15])
