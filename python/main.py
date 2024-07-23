@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 
 import time
@@ -15,19 +15,19 @@ from swarm import Swarm
 from scipy.spatial import distance
 
 
-# In[ ]:
+# In[13]:
 
 
 import time
 
 from subprocess import Popen,PIPE,run
 
-process = Popen(['gz','sim', 'RHEA_swarm_DenseForest'], '-r','-s'), stdout=PIPE, stderr=PIPE])
+process = Popen(['gz','sim', '../worlds/RHEA_swarm_DenseForest.sdf', '-r','-s'], stdout=PIPE, stderr=PIPE)
 
 time.sleep(15)
 
 
-# In[2]:
+# In[14]:
 
 
 NUM_DRONES = 5
@@ -49,7 +49,7 @@ MUTATION_RATE = 0.1
 INITIAL_VISIBILITY =0.5
 
 
-# In[3]:
+# In[15]:
 
 
 grid_offset=GRID_SIZE/2
@@ -60,13 +60,13 @@ camera_offset= 35 * np.tan(camera_fov/2)
 prob_array_size= int(np.ceil((GRID_SIZE*512)/(camera_offset*2)))
 
 
-# In[4]:
+# In[16]:
 
 
 ShouldPrint=False
 
 
-# In[5]:
+# In[17]:
 
 
 def getProbabilityGrid(Last_Known_Position, sigma):
@@ -86,7 +86,7 @@ def getProbabilityGrid(Last_Known_Position, sigma):
 
 
 
-# In[6]:
+# In[18]:
 
 
 #return percentage of ground visible (depth>34meter)
@@ -111,7 +111,7 @@ def update_Target_Position():
 
 # Initialization of Drones and Solution Populations
 
-# In[7]:
+# In[19]:
 
 
 #Spawn Drones and move to initial position
@@ -119,6 +119,8 @@ def update_Target_Position():
 # Create the swarm object by passing the name
 # of the world from the .sdf world file.
 swarm = Swarm("rhea_swarm")
+
+print("Test")
 
 # Spawn X drones and keep the returning ids as handles
 #ids = swarm.spawn(NUM_DRONES)
@@ -147,7 +149,7 @@ prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
 #print(prob_density)
 
 
-# In[8]:
+# In[20]:
 
 
 #Create "Base Grid"
@@ -229,14 +231,14 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     
 
 
-# In[9]:
+# In[21]:
 
 
 #print(swarm.depth_images[1])
 #print(check_ground_visibility(swarm.depth_images[1]))
 
 
-# In[10]:
+# In[22]:
 
 
 # Problem classes
@@ -250,7 +252,7 @@ from pymoo.algorithms.soo.nonconvex.de import DE
 from pymoo.operators.sampling.lhs import LHS
 
 
-# In[11]:
+# In[23]:
 
 
 global lastSeenAt
@@ -259,7 +261,7 @@ lastSeenAt = [0,0]
 targetSeen = False
 
 
-# In[12]:
+# In[24]:
 
 
 def scoreThatThing(prob_density,visibility_grid,visibility_offset):
@@ -286,7 +288,7 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset):
     return score
 
 
-# In[13]:
+# In[25]:
 
 
 class MyProblem(Problem):
@@ -350,7 +352,7 @@ class MyProblem(Problem):
 
 # 
 
-# In[14]:
+# In[26]:
 
 
 from pymoo.core.sampling import Sampling
@@ -375,7 +377,7 @@ termination = get_termination("n_gen", NUM_GENERATIONS)
 
 
 
-# In[15]:
+# In[27]:
 
 
 problem = MyProblem(GRID_SIZE, NUM_DRONES, NUM_GENERATIONS, waypoints, prob_density)
@@ -390,13 +392,13 @@ algorithm = DE(
 )
 
 
-# In[16]:
+# In[28]:
 
 
 import matplotlib.pyplot as plt
 
 
-# In[1]:
+# In[29]:
 
 
 finished=False
@@ -461,5 +463,13 @@ print(f"Best Solution:\n {best_solution}")
 #Kill the Simulation
 
 run(['pkill', '--full', 'gz sim server'])
-run(['pkill', '--full', 'gz sim gui']
+run(['pkill', '--full', 'gz sim gui'])
+
+print(process.communicate())
+
+
+# In[ ]:
+
+
+
 
