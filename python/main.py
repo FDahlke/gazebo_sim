@@ -22,7 +22,7 @@ import time
 
 from subprocess import Popen,PIPE,run
 
-process = Popen(['gz','sim', 'RHEA_swarm_DenseForest'], '-r','-s'). stdout=PIPE, stderr=PIPE)
+process = Popen(['gz','sim', 'RHEA_swarm_DenseForest'], '-r','-s'), stdout=PIPE, stderr=PIPE])
 
 time.sleep(15)
 
