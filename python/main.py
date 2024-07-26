@@ -1,45 +1,53 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[1]:
 
 
 import time
-import cv2
 import math
+import argparse
 
 import numpy as np
 
 from swarm import Swarm
 
-#from scipy.spatial import distance
 
 
-# In[13]:
+# In[2]:
 
+
+#ArgParser:
+parser = argparse.ArgumentParser(description="Example script with argparse")
+
+parser.add_argument('--outputFile', type=str,default='../data/logs/defaultLogfile', help='Path where the output should be stored')
+parser.add_argument('--numDrones', type=int, default=5, help='Number of Drones used')
+
+parser.add_argument('--popSize', type=int, default=10, help='Population Size of each Generation')
+parser.add_argument('--numGenerations', type=int, default=2, help='Number of Generations')
+parser.add_argument('--worldFile', type=str, default='RHEA_swarm_DenseForest', help='name of the world file without sdf')
+
+
+args, unknown = parser.parse_known_args()
+
+
+# In[ ]:
+
+
+#Starts the simulation as a separate thread
 
 import time
-
 from subprocess import Popen,PIPE,run
 
-process = Popen(['gz','sim', '../worlds/RHEA_swarm_DenseForest.sdf', '-r','-s'], stdout=PIPE, stderr=PIPE)
+process = Popen(['gz','sim', f"../worlds/{args.worldFile}.sdf", '-r','-s'], stdout=PIPE, stderr=PIPE)
 
 time.sleep(15)
 
-NUM_DRONES = 5
-POPULATION_SIZE = 10
-NUM_GENERATIONS = 2
-MUTATION_RATE = 0.1
 
-swarm = Swarm("rhea_swarm")
-
-# Spawn X drones and keep the returning ids as handles
-ids = swarm.spawn(NUM_DRONES*POPULATION_SIZE)
+# In[3]:
 
 
-
-
-
+NUM_DRONES = args.numDrones
 
 AREA_SIZE_X = 100
 AREA_SIZE_Y = 100
@@ -51,12 +59,11 @@ IMAGE_SIZE = 512 #How many Scanning points each image has per Row (Images are 51
 MOVE_DISTANCE = 1       # How far a Drone can move each Timestep
 DRONE_HEIGHT = 35
 
+POPULATION_SIZE = args.popSize
+NUM_GENERATIONS = args.numGenerations
+MUTATION_RATE = 0.1
 
 INITIAL_VISIBILITY =0.5
-
-
-# In[15]:
-
 
 grid_offset=GRID_SIZE/2
 
@@ -65,14 +72,13 @@ camera_offset= 35 * np.tan(camera_fov/2)
 
 prob_array_size= int(np.ceil((GRID_SIZE*512)/(camera_offset*2)))
 
+#How many Drones should see the same points for it to count as "seen"
+seenPercentage = 0.5
 
-# In[16]:
+start = time.time()
 
 
-ShouldPrint=False
-
-
-# In[17]:
+# In[4]:
 
 
 def getProbabilityGrid(Last_Known_Position, sigma):
@@ -86,45 +92,18 @@ def getProbabilityGrid(Last_Known_Position, sigma):
     return prob_density,x,y
 
 
-# In[ ]:
-
-
-
-
-
-# In[18]:
-
-
-#return percentage of ground visible (depth>34meter)
-def check_ground_visibility(depth_image):
-    number_visible_ground=0
-    for i in depth_image:
-        for j in i:
-            if j[0]>3400:
-                number_visible_ground= number_visible_ground+1
-    return number_visible_ground/(512**2)
- 
-def update_Target_Position():
-    if Target_Position[0]<25:
-        Target_Position = Target_Position + [0.5,0.5]
-
-
-# In[ ]:
-
-
-
-
-
-# Initialization of Drones and Solution Populations
-
-# In[19]:
+# In[5]:
 
 
 #Spawn Drones and move to initial position
 
 # Create the swarm object by passing the name
 # of the world from the .sdf world file.
+swarm = Swarm(args.worldFile)
 
+# Spawn X drones and keep the returning ids as handles
+#ids = swarm.spawn(NUM_DRONES)
+ids = swarm.spawn(NUM_DRONES*POPULATION_SIZE)
 
 #Initialize Target Position
 Target_Position =np.array([20,15])
@@ -149,11 +128,36 @@ prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
 #print(prob_density)
 
 
-# In[20]:
+# In[6]:
 
 
-#Create "Base Grid"
-#by Calculating distance between each scanning point at DRONE_HEIGHT
+# Problem classes
+from pymoo.core.problem import Problem
+from pymoo.optimize import minimize
+
+# Algorithmss
+from pymoo.algorithms.soo.nonconvex.de import DE
+
+# Survival operators
+from pymoo.operators.sampling.lhs import LHS
+
+
+# In[7]:
+
+
+#return percentage of ground visible (depth>34meter)
+def check_ground_visibility(depth_image):
+    number_visible_ground=0
+    for i in depth_image:
+        for j in i:
+            if j[0]>3400:
+                number_visible_ground= number_visible_ground+1
+    return number_visible_ground/(512**2)
+ 
+def update_Target_Position():
+    if Target_Position[0]<25:
+        Target_Position = Target_Position + [0.5,0.5]
+
 
 #Gives Coordinates based on drone position and scan pixel
 def calculate_world_coordinates(drone_pos, image_radius, img_x, img_y):
@@ -163,6 +167,11 @@ def calculate_world_coordinates(drone_pos, image_radius, img_x, img_y):
 
 
     return array_width,array_height
+
+
+# In[8]:
+
+
 def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     
     global targetSeen
@@ -202,7 +211,8 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     visibility_threshold= 3400 #once depth is higher than this value, the ground counts as seen
     
     #adds 1/NUM_DRONES if the point is seen
-    for id in range(len(waypoints)):
+    
+    for id in range(len(waypoints)):       
         for i in range(img_width):
             for j in range(img_height):
                 if swarm.depth_images[id+(offset*NUM_DRONES)][i][j][0] > visibility_threshold:
@@ -212,84 +222,64 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
                     
                     if 0 <= world_x_idx < array_width and 0 <= world_y_idx < array_height:
                         visibility_array[world_x_idx][world_y_idx] += 1/NUM_DRONES
-                    
-                        #if a seen ground Tile is within 0.3 meters of the real target, it counts as seen
-                        #
-                        if (distance.euclidean([world_x,world_y], Target_Position)<=0.3) and visibility_array[world_x_idx][world_y_idx]>0.5:
-                            targetSeen = True
-                            lastSeenAt = [world_x,world_y]
-                            #print([world_x,world_y],Target_Position)
-    
-    
+
     #gets the corner of the visibility array, so correct overlap with probability array can be calculated
 
     visibility_offset_x=int(((MinX[1]+grid_offset)/GRID_SIZE)*prob_array_size)
     visibility_offset_y=int(((MinY[1]+grid_offset)/GRID_SIZE)*prob_array_size)
     
     visibility_offset=[visibility_offset_x,visibility_offset_y]
-    return visibility_array, visibility_offset
+    
+    #get X/Y of target
+    target_x, target_y = calculate_world_coordinates(Target_Position, camera_offset, j, i)
+    target_x_idx = int(((world_x - MinX[1]) / (MaxX[1] - MinX[1])) * array_width)
+    target_y_idx = int(((world_y - MinY[1]) / (MaxY[1] - MinY[1])) * array_height)
+    
+    targetXY= [target_x_idx,target_y_idx]
+    
+    return visibility_array, visibility_offset, targetXY
     
 
 
-# In[21]:
+# In[9]:
 
 
-#print(swarm.depth_images[1])
-#print(check_ground_visibility(swarm.depth_images[1]))
-
-
-# In[22]:
-
-
-# Problem classes
-from pymoo.core.problem import Problem, ElementwiseProblem
-from pymoo.optimize import minimize
-
-# Algorithmss
-from pymoo.algorithms.soo.nonconvex.de import DE
-
-# Survival operators
-from pymoo.operators.sampling.lhs import LHS
-
-
-# In[23]:
-
-
-global lastSeenAt
-global targetSeen
-lastSeenAt = [0,0]
-targetSeen = False
-
-
-# In[24]:
-
-
-def scoreThatThing(prob_density,visibility_grid,visibility_offset):
+def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
     
-    #scoring_array=np.array(prob_density)
-    if ShouldPrint:
-        print(f"Prob_density {prob_density},\n\n visibility_grid: {visibility_grid},\n\n offset: {visibility_offset}")
-        print(f"Prob_size: {np.shape(prob_density)}")
+    #print("Scoring somthing")
+    
     scoring_array=np.zeros(prob_density.shape)
     score=0
-    
+    targetSeen = False
     #print("Visibility grid in scoring: ", visibility_grid.shape)
     
     for i in range(visibility_grid.shape[0]):
         for j in range(visibility_grid.shape[1]):
-            scoring_array[i+visibility_offset[0]][j+visibility_offset[1]]=prob_density[i+visibility_offset[0]][j+visibility_offset[1]]*visibility_grid[i][j]
+            visibility_Value=visibility_grid[i][j]
+            tileScore = prob_density[i+visibility_offset[0]][j+visibility_offset[1]]*visibility_Value
+            #Only used for visualization of scores
+            #scoring_array[i+visibility_offset[0]][j+visibility_offset[1]]=prob_density[i+visibility_offset[0]][j+visibility_offset[1]]*visibility_Value
             
             #only add score if half the drones see square
-            if visibility_grid[i][j]>=0.5:
-                score+=scoring_array[i+visibility_offset[0]][j+visibility_offset[1]]
+            if visibility_Value>=seenPercentage:
+                #if ground tile is within 3 grids (~18cm radius) of target
+                #increases score
+                if i-3<=targetXY[0]<=i+3 and j-3<=targetXY[1]<=j+3:
+                    targetSeen=True
+                    score+=(tileScore*5)
+                else:
+                    score+=tileScore
+                    
                 
     #plt.imshow(scoring_array, cmap='gray')
     #plt.show()
-    return score
+    return score, targetSeen
 
 
-# In[25]:
+# In[10]:
 
+
+evalTimings= []
 
 class MyProblem(Problem):
 
@@ -314,7 +304,10 @@ class MyProblem(Problem):
         #x are the waypoints
     def _evaluate(self, x, out, *args, **kwargs):
         
+        evalTime_start = time.time()
+        
         scores = np.zeros(POPULATION_SIZE)
+        seenAr = np.zeros(POPULATION_SIZE)
         
         #scales the variables to  [-2,2]
         _x= np.array(x)*4-2
@@ -330,29 +323,29 @@ class MyProblem(Problem):
         
         isScored = False
         score = None
-        
+
         while not isScored:
             #wait until all drones received
             if swarm.received_frames[ids[-1]]:
+                #print(f"Frames received after {time.time()-evalTime_start} seconds")
                 for i in range(POPULATION_SIZE):
                     solutionWaypoints = tempWaypoints[i*NUM_DRONES:(i+1)*NUM_DRONES]
-                    #print(f"Scoring Solution {i}\n {solutionWaypoints}")
                     
-                    visibility_grid,visibility_offset = getOverlapArray(solutionWaypoints,offset=i)
-                    score = scoreThatThing(self.prob_density,visibility_grid,visibility_offset)
-
-                    if targetSeen:
-                        score = score *2
+                    visibility_grid,visibility_offset, targetXY = getOverlapArray(solutionWaypoints,offset=i)
+                    score, _wasSeen = scoreThatThing(self.prob_density,visibility_grid,visibility_offset,targetXY)
+                    
                     scores[i] = -score
-                    
+                    seenAr[i] = _wasSeen
+                
+                #print(f"finished scoring {time.time()-evalTime_start} seconds after starting evaluation")
                 isScored=True
            
         out["F"] = scores
+        out["aux1"] = seenAr
+        evalTimings.append(time.time()-evalTime_start)
 
 
-# 
-
-# In[26]:
+# In[11]:
 
 
 from pymoo.core.sampling import Sampling
@@ -363,8 +356,6 @@ class MySampling(Sampling):
         #X = np.array(0)
         for i in range(n_samples-1):
             X= np.append(X,[np.random.rand(problem.n_var)], axis=0)
-            #print(f"Sampled X: {X.shape} -> {X}") 
-        #print(X)
         return X
     
 from pymoo.termination import get_termination
@@ -377,7 +368,7 @@ termination = get_termination("n_gen", NUM_GENERATIONS)
 
 
 
-# In[27]:
+# In[12]:
 
 
 problem = MyProblem(GRID_SIZE, NUM_DRONES, NUM_GENERATIONS, waypoints, prob_density)
@@ -392,13 +383,13 @@ algorithm = DE(
 )
 
 
-# In[28]:
+# In[13]:
 
 
 import matplotlib.pyplot as plt
 
 
-# In[29]:
+# In[14]:
 
 
 finished=False
@@ -413,38 +404,40 @@ runNumber=0
 
 sigma=10
 
-print("Starting now!")
+print(f"Starting now, at {time.time() - start}")
 
-while not finished and runNumber<50:
-    #wait until all drones received
-    #if swarm.received_frames[ids[-1]]:
-    print(f"Starting Run number {runNumber}")
-    print(f"Swarm is currently at {problem.waypoints}")
+dronePath= []
+#dronePath = np.array([])
+targetDetections = []
+
+while not finished and runNumber<10:
+    #print(f"Starting Run number {runNumber} at time: {time.time() - start} ")
+    #print(f"Swarm is currently at\n {problem.waypoints}")
     runNumber+=1
 
     #get best solution
     res = minimize(problem, algorithm, termination, seed=1, verbose=True)
     _x= np.array(res.X)*4-2
     best_solution = _x.reshape(-1, 2)
-    #best_solution = res.X.reshape(-1, 2)
-    print(f"Best Solution: \n {best_solution}")
+    
     #update waypoints
     waypoints = waypoints + np.pad(best_solution,((0, 0), (0, 1)),mode='constant',constant_values=0)
-    
-    #swarm.waypoints(ids,waypoints)
-    print(f"Sending swarm to \n {waypoints}")
-    #update probability_grid and waypoints
+    dronePath.append(np.array([waypoints]))
     problem.waypoints = waypoints
+                     
     sigma+=1
-
-    if targetSeen:
-        print("Target Seen!\n Updating target Position and resetting Sigma")
+    #if target was seen:
+    best = res.opt[0]
+    if best.get("aux1"):
+        #print("Target Seen!\n Updating target Position and resetting Sigma")
         sigma = 2
         Last_Known_Position= Target_Position
-        targetSeen = False
+        
+        targetDetections.append([runNumber, 0])
+            
 
-    problem.prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
-
+    prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
+    problem.prob_density = prob_density
 
 
     plt.figure(figsize=(4, 3))
@@ -454,7 +447,10 @@ while not finished and runNumber<50:
     plt.scatter(waypoints[:, 0],waypoints[:, 1], color='green', label='Drones')
     plt.show()
 
-print(f"Best Solution:\n {best_solution}")
+print(f"Drone Path:\n{dronePath}\n\n\n\n")
+print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
+print(f"\n\nTarget was first detected in Step {targetDetections[0][0]}")
+#print("Target was detected")
 
 
 # In[ ]:
@@ -463,9 +459,11 @@ print(f"Best Solution:\n {best_solution}")
 #Kill the Simulation
 
 run(['pkill', '--full', 'gz sim server'])
+print("gz sim server killed")
 run(['pkill', '--full', 'gz sim gui'])
+print("gz sim gui killed")
 
-print(process.communicate())
+#print(process.communicate())
 
 
 # In[ ]:
