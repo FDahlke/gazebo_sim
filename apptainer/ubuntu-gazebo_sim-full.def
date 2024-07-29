@@ -27,6 +27,9 @@ From: ubuntu:22.04
 	conda install protobuf=3.20.3
 	conda install conda-build
 	conda install -c conda-forge libstdcxx-ng
+	#pymoo
+	conda activate pymoo
+	pip install -U pymoo
 
 	# Install tzdata in a non-interactive way
 	DEBIAN_FRONTEND=noninteractive

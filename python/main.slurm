@@ -9,4 +9,4 @@
 
 srun hostname
 srun nproc
-srun apptainer exec ../apptainer/gazebo_sim-full.sif python main.py --numDrones 10 --popSize 10 --numGenerations 10 --outputFile ../data/logs/FirstTest
+srun apptainer exec ../apptainer/gazebo_sim-full.sif python main.py --numDrones 10 --popSize 10 --numGenerations 10
