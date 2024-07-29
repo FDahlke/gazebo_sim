@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 
 import time
@@ -14,7 +14,7 @@ from swarm import Swarm
 
 
 
-# In[2]:
+# In[ ]:
 
 
 #ArgParser:
@@ -44,7 +44,7 @@ process = Popen(['gz','sim', f"../worlds/{args.worldFile}.sdf", '-r','-s'], stdo
 time.sleep(15)
 
 
-# In[3]:
+# In[ ]:
 
 
 NUM_DRONES = args.numDrones
@@ -63,8 +63,6 @@ POPULATION_SIZE = args.popSize
 NUM_GENERATIONS = args.numGenerations
 MUTATION_RATE = 0.1
 
-INITIAL_VISIBILITY =0.5
-
 grid_offset=GRID_SIZE/2
 
 camera_fov=np.deg2rad(CAMERA_FOV_DEGREE)
@@ -78,7 +76,7 @@ seenPercentage = 0.5
 start = time.time()
 
 
-# In[4]:
+# In[ ]:
 
 
 def getProbabilityGrid(Last_Known_Position, sigma):
@@ -92,7 +90,7 @@ def getProbabilityGrid(Last_Known_Position, sigma):
     return prob_density,x,y
 
 
-# In[5]:
+# In[ ]:
 
 
 #Spawn Drones and move to initial position
@@ -117,9 +115,6 @@ for i in range (NUM_DRONES):
 #create Initial
 #swarm.waypoints(ids, waypoints)
 
-#Visibility by Coordiantes File:
-grid_visibility = np.full((AREA_SIZE_X,AREA_SIZE_Y), INITIAL_VISIBILITY)
-
 #Create Target Probability Grid
 sigma= 10
 
@@ -128,7 +123,7 @@ prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
 #print(prob_density)
 
 
-# In[6]:
+# In[ ]:
 
 
 # Problem classes
@@ -142,7 +137,7 @@ from pymoo.algorithms.soo.nonconvex.de import DE
 from pymoo.operators.sampling.lhs import LHS
 
 
-# In[7]:
+# In[ ]:
 
 
 #return percentage of ground visible (depth>34meter)
@@ -169,7 +164,7 @@ def calculate_world_coordinates(drone_pos, image_radius, img_x, img_y):
     return array_width,array_height
 
 
-# In[8]:
+# In[ ]:
 
 
 def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
@@ -241,7 +236,7 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     
 
 
-# In[9]:
+# In[ ]:
 
 
 def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
@@ -276,7 +271,7 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
     return score, targetSeen
 
 
-# In[10]:
+# In[ ]:
 
 
 evalTimings= []
@@ -345,7 +340,7 @@ class MyProblem(Problem):
         evalTimings.append(time.time()-evalTime_start)
 
 
-# In[11]:
+# In[ ]:
 
 
 from pymoo.core.sampling import Sampling
@@ -368,7 +363,7 @@ termination = get_termination("n_gen", NUM_GENERATIONS)
 
 
 
-# In[12]:
+# In[ ]:
 
 
 problem = MyProblem(GRID_SIZE, NUM_DRONES, NUM_GENERATIONS, waypoints, prob_density)
@@ -383,13 +378,13 @@ algorithm = DE(
 )
 
 
-# In[13]:
+# In[ ]:
 
 
 import matplotlib.pyplot as plt
 
 
-# In[14]:
+# In[ ]:
 
 
 finished=False
@@ -410,7 +405,7 @@ dronePath= []
 #dronePath = np.array([])
 targetDetections = []
 
-while not finished and runNumber<10:
+while not finished and runNumber<50:
     #print(f"Starting Run number {runNumber} at time: {time.time() - start} ")
     #print(f"Swarm is currently at\n {problem.waypoints}")
     runNumber+=1
@@ -462,11 +457,6 @@ run(['pkill', '--full', 'gz sim server'])
 print("gz sim server killed")
 run(['pkill', '--full', 'gz sim gui'])
 print("gz sim gui killed")
-
-#print(process.communicate())
-
-
-# In[ ]:
 
 
 
