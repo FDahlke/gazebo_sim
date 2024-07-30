@@ -161,9 +161,6 @@ def calculate_world_coordinates(drone_pos, image_radius, img_x, img_y):
     return (pos_x, pos_y)
 
 
-    return array_width,array_height
-
-
 # In[ ]:
 
 
@@ -212,8 +209,12 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
             for j in range(img_height):
                 if swarm.depth_images[id+(offset*NUM_DRONES)][i][j][0] > visibility_threshold:
                     world_x, world_y = calculate_world_coordinates(waypoints[id], camera_offset, j, i)
-                    world_x_idx = int(((world_x - MinX[1]) / (MaxX[1] - MinX[1])) * array_width)
-                    world_y_idx = int(((world_y - MinY[1]) / (MaxY[1] - MinY[1])) * array_height)
+                    try:
+                        world_x_idx = int(((world_x - MinX[1]) / (MaxX[1] - MinX[1])) * array_width)
+                        world_y_idx = int(((world_y - MinY[1]) / (MaxY[1] - MinY[1])) * array_height)
+                    except:
+                        print(f"Something went wrong, world_x: {world_x}, world_y: {world_y}")
+                        raise Exception("Calculating World_ID went wrong")
                     
                     if 0 <= world_x_idx < array_width and 0 <= world_y_idx < array_height:
                         visibility_array[world_x_idx][world_y_idx] += 1/NUM_DRONES
@@ -411,7 +412,10 @@ while not finished and runNumber<50:
     runNumber+=1
 
     #get best solution
-    res = minimize(problem, algorithm, termination, seed=1, verbose=True)
+    try:
+        res = minimize(problem, algorithm, termination, seed=1, verbose=True)
+    except:
+        print(f"Minimization had an Exception, Dronepath: \n {dronePath}")
     _x= np.array(res.X)*4-2
     best_solution = _x.reshape(-1, 2)
     
@@ -457,6 +461,11 @@ run(['pkill', '--full', 'gz sim server'])
 print("gz sim server killed")
 run(['pkill', '--full', 'gz sim gui'])
 print("gz sim gui killed")
+
+#print(process.communicate())
+
+
+# In[ ]:
 
 
 
