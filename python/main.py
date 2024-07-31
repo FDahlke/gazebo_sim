@@ -12,6 +12,7 @@ import numpy as np
 
 from swarm import Swarm
 
+#TODO: add constraints to drone position
 
 
 # In[ ]:
@@ -69,6 +70,15 @@ camera_fov=np.deg2rad(CAMERA_FOV_DEGREE)
 camera_offset= 35 * np.tan(camera_fov/2)
 
 prob_array_size= int(np.ceil((GRID_SIZE*512)/(camera_offset*2)))
+
+
+#each "Step" is 10 seconds in this Example
+
+#How far the drones should move each step at maximum
+DRONE_STEPSIZE= 30
+#
+#How far the target could move each stepsize (Sigma+=Stepsize)
+TARGET_STEPSIZE= 14
 
 #How many Drones should see the same points for it to count as "seen"
 seenPercentage = 0.5
@@ -212,9 +222,9 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
                     try:
                         world_x_idx = int(((world_x - MinX[1]) / (MaxX[1] - MinX[1])) * array_width)
                         world_y_idx = int(((world_y - MinY[1]) / (MaxY[1] - MinY[1])) * array_height)
-                    except:
-                        print(f"Something went wrong, world_x: {world_x}, world_y: {world_y}")
-                        raise Exception("Calculating World_ID went wrong")
+                    except Exception as e:
+                        print(f"Something went wrong, Exception: {e}\ncurrent coordiantes: world_x: {world_x}, world_y: {world_y}")
+                        
                     
                     if 0 <= world_x_idx < array_width and 0 <= world_y_idx < array_height:
                         visibility_array[world_x_idx][world_y_idx] += 1/NUM_DRONES
@@ -414,8 +424,8 @@ while not finished and runNumber<50:
     #get best solution
     try:
         res = minimize(problem, algorithm, termination, seed=1, verbose=True)
-    except:
-        print(f"Minimization had an Exception, Dronepath: \n {dronePath}")
+    except Exception as e:
+        print(f"Minimization had an Exception: {e}")
     _x= np.array(res.X)*4-2
     best_solution = _x.reshape(-1, 2)
     
@@ -424,12 +434,12 @@ while not finished and runNumber<50:
     dronePath.append(np.array([waypoints]))
     problem.waypoints = waypoints
                      
-    sigma+=1
+    sigma+=14
     #if target was seen:
     best = res.opt[0]
     if best.get("aux1"):
         #print("Target Seen!\n Updating target Position and resetting Sigma")
-        sigma = 2
+        sigma = 14
         Last_Known_Position= Target_Position
         
         targetDetections.append([runNumber, 0])
@@ -439,12 +449,12 @@ while not finished and runNumber<50:
     problem.prob_density = prob_density
 
 
-    plt.figure(figsize=(4, 3))
-    plt.contourf(x, y, prob_density, levels=50, cmap='hot')
-    plt.colorbar(label='Probability Density')
-    plt.scatter(Last_Known_Position[0],Last_Known_Position[1], color='blue', label='Last Known Position')
-    plt.scatter(waypoints[:, 0],waypoints[:, 1], color='green', label='Drones')
-    plt.show()
+    #plt.figure(figsize=(4, 3))
+    #plt.contourf(x, y, prob_density, levels=50, cmap='hot')
+    #plt.colorbar(label='Probability Density')
+    #plt.scatter(Last_Known_Position[0],Last_Known_Position[1], color='blue', label='Last Known Position')
+    #plt.scatter(waypoints[:, 0],waypoints[:, 1], color='green', label='Drones')
+    #plt.show()
 
 print(f"Drone Path:\n{dronePath}\n\n\n\n")
 print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
