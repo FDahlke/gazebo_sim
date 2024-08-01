@@ -458,8 +458,9 @@ while not finished and runNumber<50:
 
 print(f"Drone Path:\n{dronePath}\n\n\n\n")
 print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
-print(f"\n\nTarget was first detected in Step {targetDetections[0][0]}")
+#print(f"\n\nTarget was first detected in Step {targetDetections[0]}")
 #print("Target was detected")
+print(f"All target detections:\n{targetDetections}")
 
 
 # In[ ]:
