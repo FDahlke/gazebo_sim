@@ -229,7 +229,6 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
                     if 0 <= world_x_idx < array_width and 0 <= world_y_idx < array_height:
                         visibility_array[world_x_idx][world_y_idx] += 1/NUM_DRONES
 
-    #gets the corner of the visibility array, so correct overlap with probability array can be calculated
 
     visibility_offset_x=int(((MinX[1]+grid_offset)/GRID_SIZE)*prob_array_size)
     visibility_offset_y=int(((MinY[1]+grid_offset)/GRID_SIZE)*prob_array_size)
@@ -238,8 +237,8 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     
     #get X/Y of target
     target_x, target_y = calculate_world_coordinates(Target_Position, camera_offset, j, i)
-    target_x_idx = int(((world_x - MinX[1]) / (MaxX[1] - MinX[1])) * array_width)
-    target_y_idx = int(((world_y - MinY[1]) / (MaxY[1] - MinY[1])) * array_height)
+    target_x_idx = int(((Target_Position[0] - MinX[1]) / (MaxX[1] - MinX[1])) * array_width)
+    target_y_idx = int(((Target_Position[1] - MinY[1]) / (MaxY[1] - MinY[1])) * array_height)
     
     targetXY= [target_x_idx,target_y_idx]
     
