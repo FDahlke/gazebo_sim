@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 
 import time
@@ -15,7 +15,7 @@ from swarm import Swarm
 #TODO: add constraints to drone position
 
 
-# In[ ]:
+# In[2]:
 
 
 #ArgParser:
@@ -25,14 +25,14 @@ parser.add_argument('--outputFile', type=str,default='../data/logs/defaultLogfil
 parser.add_argument('--numDrones', type=int, default=5, help='Number of Drones used')
 
 parser.add_argument('--popSize', type=int, default=10, help='Population Size of each Generation')
-parser.add_argument('--numGenerations', type=int, default=2, help='Number of Generations')
+parser.add_argument('--numGenerations', type=int, default=5, help='Number of Generations')
 parser.add_argument('--worldFile', type=str, default='RHEA_swarm_DenseForest', help='name of the world file without sdf')
 
 
 args, unknown = parser.parse_known_args()
 
 
-# In[ ]:
+# In[3]:
 
 
 #Starts the simulation as a separate thread
@@ -45,19 +45,18 @@ process = Popen(['gz','sim', f"../worlds/{args.worldFile}.sdf", '-r','-s'], stdo
 time.sleep(15)
 
 
-# In[ ]:
+# In[3]:
 
 
 NUM_DRONES = args.numDrones
 
-AREA_SIZE_X = 100
-AREA_SIZE_Y = 100
-GRID_SIZE = 100           # Size of the Forest
+AREA_SIZE_X = 1000
+AREA_SIZE_Y = 1000
+GRID_SIZE = 1000       # Size of the Forest
 
 CAMERA_FOV_DEGREE = 50
 IMAGE_SIZE = 512 #How many Scanning points each image has per Row (Images are 512x512)
 
-MOVE_DISTANCE = 1       # How far a Drone can move each Timestep
 DRONE_HEIGHT = 35
 
 POPULATION_SIZE = args.popSize
@@ -86,7 +85,7 @@ seenPercentage = 0.5
 start = time.time()
 
 
-# In[ ]:
+# In[4]:
 
 
 def getProbabilityGrid(Last_Known_Position, sigma):
@@ -100,7 +99,7 @@ def getProbabilityGrid(Last_Known_Position, sigma):
     return prob_density,x,y
 
 
-# In[ ]:
+# In[5]:
 
 
 #Spawn Drones and move to initial position
@@ -114,7 +113,7 @@ swarm = Swarm(args.worldFile)
 ids = swarm.spawn(NUM_DRONES*POPULATION_SIZE)
 
 #Initialize Target Position
-Target_Position =np.array([20,15])
+Target_Position =np.array([5,5])
 Last_Known_Position = Target_Position
 
 # First waypoints
@@ -133,7 +132,7 @@ prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
 #print(prob_density)
 
 
-# In[ ]:
+# In[6]:
 
 
 # Problem classes
@@ -147,7 +146,7 @@ from pymoo.algorithms.soo.nonconvex.de import DE
 from pymoo.operators.sampling.lhs import LHS
 
 
-# In[ ]:
+# In[7]:
 
 
 #return percentage of ground visible (depth>34meter)
@@ -171,7 +170,7 @@ def calculate_world_coordinates(drone_pos, image_radius, img_x, img_y):
     return (pos_x, pos_y)
 
 
-# In[ ]:
+# In[8]:
 
 
 def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
@@ -246,7 +245,7 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     
 
 
-# In[ ]:
+# In[9]:
 
 
 def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
@@ -271,6 +270,7 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
                 #increases score
                 if i-3<=targetXY[0]<=i+3 and j-3<=targetXY[1]<=j+3:
                     targetSeen=True
+                    #print("Saw somehting!")
                     score+=(tileScore*5)
                 else:
                     score+=tileScore
@@ -281,7 +281,7 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
     return score, targetSeen
 
 
-# In[ ]:
+# In[10]:
 
 
 evalTimings= []
@@ -337,6 +337,7 @@ class MyProblem(Problem):
                     solutionWaypoints = tempWaypoints[i*NUM_DRONES:(i+1)*NUM_DRONES]
                     
                     visibility_grid,visibility_offset, targetXY = getOverlapArray(solutionWaypoints,offset=i)
+                    #print(f"Target is at {targetXY}")
                     score, _wasSeen = scoreThatThing(self.prob_density,visibility_grid,visibility_offset,targetXY)
                     
                     scores[i] = -score
@@ -350,7 +351,7 @@ class MyProblem(Problem):
         evalTimings.append(time.time()-evalTime_start)
 
 
-# In[ ]:
+# In[11]:
 
 
 from pymoo.core.sampling import Sampling
@@ -373,7 +374,7 @@ termination = get_termination("n_gen", NUM_GENERATIONS)
 
 
 
-# In[ ]:
+# In[12]:
 
 
 problem = MyProblem(GRID_SIZE, NUM_DRONES, NUM_GENERATIONS, waypoints, prob_density)
@@ -388,7 +389,7 @@ algorithm = DE(
 )
 
 
-# In[ ]:
+# In[13]:
 
 
 import matplotlib.pyplot as plt
@@ -415,7 +416,7 @@ dronePath= []
 #dronePath = np.array([])
 targetDetections = []
 
-while not finished and runNumber<50:
+while not finished and runNumber<10:
     #print(f"Starting Run number {runNumber} at time: {time.time() - start} ")
     #print(f"Swarm is currently at\n {problem.waypoints}")
     runNumber+=1
@@ -425,7 +426,7 @@ while not finished and runNumber<50:
         res = minimize(problem, algorithm, termination, seed=1, verbose=True)
     except Exception as e:
         print(f"Minimization had an Exception: {e}")
-    _x= np.array(res.X)*4-2
+    _x= np.array(res.X)*(DRONE_STEPSIZE*2)-DRONE_STEPSIZE
     best_solution = _x.reshape(-1, 2)
     
     #update waypoints
@@ -433,11 +434,16 @@ while not finished and runNumber<50:
     dronePath.append(np.array([waypoints]))
     problem.waypoints = waypoints
                      
-    sigma+=14
+    sigma+=TARGET_STEPSIZE
+    
     #if target was seen:
     best = res.opt[0]
+    best_aux = best.get("aux1")
+    best_F = best.get("F")
+    #print(f"Score: {best_F} and aux: {best_aux} test")
+    #print(f"Waypoints: {waypoints}")
     if best.get("aux1"):
-        #print("Target Seen!\n Updating target Position and resetting Sigma")
+        print("Target Seen!\nUpdating target Position and resetting Sigma")
         sigma = 14
         Last_Known_Position= Target_Position
         
@@ -457,9 +463,8 @@ while not finished and runNumber<50:
 
 print(f"Drone Path:\n{dronePath}\n\n\n\n")
 print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
-#print(f"\n\nTarget was first detected in Step {targetDetections[0]}")
-#print("Target was detected")
-print(f"All target detections:\n{targetDetections}")
+print(f"\n\nTarget was first detected in Step {targetDetections[0]}")
+print(f"Afterwards target was detected in {np.mean(targetDetections)}% of the following timesteps")
 
 
 # In[ ]:
