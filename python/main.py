@@ -433,7 +433,7 @@ dronePath= []
 #dronePath = np.array([])
 targetDetections = []
 
-while (not finished and runNumber<10) or (time.time()-start> 84600):
+while (not finished and runNumber<10) or (time.time()-start> 82800):
     #print(f"Starting Run number {runNumber} at time: {time.time() - start} ")
     #print(f"Swarm is currently at\n {problem.waypoints}")
     runNumber+=1
