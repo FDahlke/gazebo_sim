@@ -42,7 +42,7 @@ from subprocess import Popen,PIPE,run
 
 process = Popen(['gz','sim', f"../worlds/{args.worldFile}.sdf", '-r','-s'], stdout=PIPE, stderr=PIPE)
 
-time.sleep(60)
+time.sleep(300)
 
 
 # In[3]:
