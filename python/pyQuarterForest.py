@@ -26,7 +26,7 @@ parser.add_argument('--numDrones', type=int, default=10, help='Number of Drones 
 
 parser.add_argument('--popSize', type=int, default=10, help='Population Size of each Generation')
 parser.add_argument('--numGenerations', type=int, default=10, help='Number of Generations')
-parser.add_argument('--worldFile', type=str, default='RHEA_swarm_DenseForest', help='name of the world file without sdf')
+parser.add_argument('--worldFile', type=str, default='worldQuarterForest', help='name of the world file without sdf')
 parser.add_argument('--maxRuns', type=int, default='50', help='maximum number of runs')
 
 args, unknown = parser.parse_known_args()
@@ -40,9 +40,12 @@ args, unknown = parser.parse_known_args()
 import time
 from subprocess import Popen,PIPE,run
 
+print(f"Opening {args.worldFile}.sdf")
+
 process = Popen(['gz','sim', f"../worlds/{args.worldFile}.sdf", '-r','-s'], stdout=PIPE, stderr=PIPE)
 
-time.sleep(60)
+print("waiting for sim to start, sleeping for 600 seconds")
+time.sleep(600)
 
 
 # In[3]:
@@ -485,10 +488,12 @@ while runNumber<maxRuns:
     #plt.show()
 
 print(f"Drone Path:\n{dronePath}\n\n\n\n")
-print(f"\n\nTarget was first detected in Step {targetDetections[0]}")
-print(f"Afterwards target was detected in {np.mean(targetDetections)}% of the following timesteps")
-print("\n\n\n")
-
+try:
+    print(f"\n\nTarget was first detected in Step {targetDetections[0]}")
+    print(f"Afterwards target was detected in {np.mean(targetDetections)}% of the following timesteps")
+    print("\n\n\n")
+except:
+    print("no target detections")
 print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
 print(f"the average waypointTimings was {np.mean(waypointTimings)} seconds")
 print(f"the average overlapTimings per Solution Individual was {np.mean(overlapTimings)} seconds")
