@@ -44,8 +44,7 @@ print(f"Opening {args.worldFile}.sdf")
 
 process = Popen(['gz','sim', f"../worlds/{args.worldFile}.sdf", '-r','-s'], stdout=PIPE, stderr=PIPE)
 
-print("waiting for sim to start, sleeping for 600 seconds")
-time.sleep(600)
+
 
 
 # In[3]:
@@ -115,8 +114,18 @@ swarm = Swarm(args.worldFile)
 
 # Spawn X drones and keep the returning ids as handles
 #ids = swarm.spawn(NUM_DRONES)
+
+print("waiting for sim to start, sleeping for 900 seconds")
+time.sleep(900)
 print(f"Trying to spawn {NUM_DRONES*POPULATION_SIZE} Drones")
-ids = swarm.spawn(NUM_DRONES*POPULATION_SIZE)
+try:
+    ids = swarm.spawn(NUM_DRONES*POPULATION_SIZE)
+except:
+    run(['pkill', '--full', 'gz sim server'])
+    print("gz sim server killed")
+    run(['pkill', '--full', 'gz sim gui'])
+    print("gz sim gui killed")
+    raise Exception("Spawning Drones failed")
 print("Drones Spawned Sucessfully")
 
 #Initialize Target Position
