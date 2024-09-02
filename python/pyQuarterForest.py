@@ -121,6 +121,7 @@ print(f"Trying to spawn {NUM_DRONES*POPULATION_SIZE} Drones")
 try:
     ids = swarm.spawn(NUM_DRONES*POPULATION_SIZE)
 except:
+    print("Error while spawning Drones")
     run(['pkill', '--full', 'gz sim server'])
     print("gz sim server killed")
     run(['pkill', '--full', 'gz sim gui'])
