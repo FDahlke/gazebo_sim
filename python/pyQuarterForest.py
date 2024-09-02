@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[3]:
 
 
 import time
@@ -15,7 +15,7 @@ from swarm import Swarm
 #TODO: add constraints to drone position
 
 
-# In[2]:
+# In[4]:
 
 
 #ArgParser:
@@ -27,27 +27,27 @@ parser.add_argument('--numDrones', type=int, default=10, help='Number of Drones 
 parser.add_argument('--popSize', type=int, default=10, help='Population Size of each Generation')
 parser.add_argument('--numGenerations', type=int, default=10, help='Number of Generations')
 parser.add_argument('--worldFile', type=str, default='worldQuarterForest', help='name of the world file without sdf')
-parser.add_argument('--maxRuns', type=int, default='50', help='maximum number of runs')
+parser.add_argument('--maxRuns', type=int, default='1', help='maximum number of runs')
 
 args, unknown = parser.parse_known_args()
 
 
-# In[3]:
+# In[5]:
 
 
 #Starts the simulation as a separate thread
 
 import time
 from subprocess import Popen,PIPE,run
+import subprocess
+  
+#print(f"Opening ../worlds/{args.worldFile}.sdf")
+#print(os.listdir("../worlds/"))
+process = Popen(['gz','sim', f"../worlds/{args.worldFile}.sdf", '-r','-s'], stdout=PIPE, stderr=PIPE, text=True)
 
-print(f"Opening {args.worldFile}.sdf")
-
-process = Popen(['gz','sim', f"../worlds/{args.worldFile}.sdf", '-r','-s'], stdout=PIPE, stderr=PIPE)
 
 
-
-
-# In[3]:
+# In[6]:
 
 
 NUM_DRONES = args.numDrones
@@ -89,7 +89,7 @@ seenPercentage = 0.5
 start = time.time()
 
 
-# In[4]:
+# In[7]:
 
 
 def getProbabilityGrid(Last_Known_Position, sigma):
@@ -103,7 +103,7 @@ def getProbabilityGrid(Last_Known_Position, sigma):
     return prob_density,x,y
 
 
-# In[10]:
+# In[8]:
 
 
 #Spawn Drones and move to initial position
@@ -112,21 +112,28 @@ def getProbabilityGrid(Last_Known_Position, sigma):
 # of the world from the .sdf world file.
 swarm = Swarm(args.worldFile)
 
+
+# In[9]:
+
+
 # Spawn X drones and keep the returning ids as handles
 #ids = swarm.spawn(NUM_DRONES)
-
-print("waiting for sim to start, sleeping for 900 seconds")
-time.sleep(900)
 print(f"Trying to spawn {NUM_DRONES*POPULATION_SIZE} Drones")
-try:
-    ids = swarm.spawn(NUM_DRONES*POPULATION_SIZE)
-except:
-    print("Error while spawning Drones")
-    run(['pkill', '--full', 'gz sim server'])
-    print("gz sim server killed")
-    run(['pkill', '--full', 'gz sim gui'])
-    print("gz sim gui killed")
-    raise Exception("Spawning Drones failed")
+tries = 0
+notStarted = True
+while notStarted and tries<15:
+    try:
+        ids = swarm.spawn(NUM_DRONES*POPULATION_SIZE)
+        notStarted = False
+    except Exception as e:
+        print(f"Sim not ready after {tries} minutes, sleeping for 1 minute")
+        print(e)
+        time.sleep(60)
+        tries = tries+1
+
+if tries>=15:
+    raise Exception("Simulation couldnt be started after 15 minutes")
+    
 print("Drones Spawned Sucessfully")
 
 #Initialize Target Position
@@ -149,7 +156,7 @@ prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
 #print(prob_density)
 
 
-# In[ ]:
+# In[6]:
 
 
 # Problem classes
@@ -163,7 +170,7 @@ from pymoo.algorithms.soo.nonconvex.de import DE
 from pymoo.operators.sampling.lhs import LHS
 
 
-# In[ ]:
+# In[7]:
 
 
 #return percentage of ground visible (depth>34meter)
@@ -187,7 +194,7 @@ def calculate_world_coordinates(drone_pos, image_radius, img_x, img_y):
     return (pos_x, pos_y)
 
 
-# In[ ]:
+# In[8]:
 
 
 def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
@@ -262,7 +269,7 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     
 
 
-# In[ ]:
+# In[9]:
 
 
 def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
@@ -294,7 +301,7 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
     return score, targetSeen
 
 
-# In[ ]:
+# In[10]:
 
 
 evalTimings= []
@@ -376,14 +383,14 @@ class MyProblem(Problem):
         out["aux1"] = seenAr
         
         evalTimings.append(time.time()-evalTime_start)   
-        #print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
-        #print(f"the average waypointTimings was {np.mean(waypointTimings)} seconds")
-        #print(f"the average overlapTimings per Solution Individual was {np.mean(overlapTimings)} seconds")
-        #print(f"the average scoringTimings per Solution Individual was {np.mean(scoringTimings)} seconds")
+        print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
+        print(f"the average waypointTimings was {np.mean(waypointTimings)} seconds")
+        print(f"the average overlapTimings per Solution Individual was {np.mean(overlapTimings)} seconds")
+        print(f"the average scoringTimings per Solution Individual was {np.mean(scoringTimings)} seconds")
         
 
 
-# In[ ]:
+# In[11]:
 
 
 from pymoo.core.sampling import Sampling
@@ -406,7 +413,7 @@ termination = get_termination("n_gen", NUM_GENERATIONS)
 
 
 
-# In[ ]:
+# In[12]:
 
 
 problem = MyProblem(GRID_SIZE, NUM_DRONES, NUM_GENERATIONS, waypoints, prob_density)
@@ -421,7 +428,7 @@ algorithm = DE(
 )
 
 
-# In[ ]:
+# In[13]:
 
 
 import matplotlib.pyplot as plt
@@ -503,14 +510,14 @@ try:
     print(f"Afterwards target was detected in {np.mean(targetDetections)}% of the following timesteps")
     print("\n\n\n")
 except:
-    print("no target detections")
+    print("Error")
 print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
 print(f"the average waypointTimings was {np.mean(waypointTimings)} seconds")
 print(f"the average overlapTimings per Solution Individual was {np.mean(overlapTimings)} seconds")
 print(f"the average scoringTimings per Solution Individual was {np.mean(scoringTimings)} seconds")
 
 
-# In[ ]:
+# In[10]:
 
 
 #Kill the Simulation
@@ -519,8 +526,15 @@ run(['pkill', '--full', 'gz sim server'])
 print("gz sim server killed")
 run(['pkill', '--full', 'gz sim gui'])
 print("gz sim gui killed")
-
+run(['pkill', '--full', 'gz sim'])
+print("gz sim killed")
 #print(process.communicate())
+
+
+# In[ ]:
+
+
+print(test)
 
 
 # In[ ]:
