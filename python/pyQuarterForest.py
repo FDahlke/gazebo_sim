@@ -240,6 +240,12 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     for id in range(len(waypoints)):       
         for i in range(img_width):
             for j in range(img_height):
+                print(offset)
+                print(f"ID: {id+(offset*NUM_DRONES)}")
+                print(f"{swarm.depth_images[id+(offset*NUM_DRONES)]}")
+                print(f"{swarm.depth_images[id+(offset*NUM_DRONES)][i]}")
+                print(f"{swarm.depth_images[id+(offset*NUM_DRONES)][i][j]}")
+                print(f"{swarm.depth_images[id+(offset*NUM_DRONES)][i][j][0]}")
                 print(f"ID: {id+(offset*NUM_DRONES)}     value: {swarm.depth_images[id+(offset*NUM_DRONES)][i][j][0]} ")
                 if swarm.depth_images[id+(offset*NUM_DRONES)][i][j][0] > visibility_threshold:
                     world_x, world_y = calculate_world_coordinates(waypoints[id], camera_offset, j, i)
