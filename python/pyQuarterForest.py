@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[3]:
+# In[1]:
 
 
 import time
@@ -15,7 +15,7 @@ from swarm import Swarm
 #TODO: add constraints to drone position
 
 
-# In[4]:
+# In[2]:
 
 
 #ArgParser:
@@ -25,19 +25,19 @@ parser.add_argument('--outputFile', type=str,default='../data/logs/defaultLogfil
 parser.add_argument('--numDrones', type=int, default=10, help='Number of Drones used')
 
 parser.add_argument('--popSize', type=int, default=10, help='Population Size of each Generation')
-parser.add_argument('--numGenerations', type=int, default=10, help='Number of Generations')
+parser.add_argument('--numGenerations', type=int, default=2, help='Number of Generations')
 parser.add_argument('--worldFile', type=str, default='worldQuarterForest', help='name of the world file without sdf')
-parser.add_argument('--maxRuns', type=int, default='1', help='maximum number of runs')
+parser.add_argument('--maxRuns', type=int, default=1, help='maximum number of runs')
 
 args, unknown = parser.parse_known_args()
 
 
-# In[5]:
+# In[3]:
 
 
 #Starts the simulation as a separate thread
 
-import time
+import time, select
 from subprocess import Popen,PIPE,run
 import subprocess
   
@@ -47,7 +47,7 @@ process = Popen(['gz','sim', f"../worlds/{args.worldFile}.sdf", '-r','-s'], stdo
 
 
 
-# In[6]:
+# In[3]:
 
 
 NUM_DRONES = args.numDrones
@@ -89,7 +89,7 @@ seenPercentage = 0.5
 start = time.time()
 
 
-# In[7]:
+# In[4]:
 
 
 def getProbabilityGrid(Last_Known_Position, sigma):
@@ -103,7 +103,7 @@ def getProbabilityGrid(Last_Known_Position, sigma):
     return prob_density,x,y
 
 
-# In[8]:
+# In[5]:
 
 
 #Spawn Drones and move to initial position
@@ -113,7 +113,7 @@ def getProbabilityGrid(Last_Known_Position, sigma):
 swarm = Swarm(args.worldFile)
 
 
-# In[9]:
+# In[6]:
 
 
 # Spawn X drones and keep the returning ids as handles
@@ -156,7 +156,7 @@ prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
 #print(prob_density)
 
 
-# In[6]:
+# In[7]:
 
 
 # Problem classes
@@ -170,7 +170,7 @@ from pymoo.algorithms.soo.nonconvex.de import DE
 from pymoo.operators.sampling.lhs import LHS
 
 
-# In[7]:
+# In[8]:
 
 
 #return percentage of ground visible (depth>34meter)
@@ -194,7 +194,7 @@ def calculate_world_coordinates(drone_pos, image_radius, img_x, img_y):
     return (pos_x, pos_y)
 
 
-# In[8]:
+# In[9]:
 
 
 def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
@@ -240,6 +240,7 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     for id in range(len(waypoints)):       
         for i in range(img_width):
             for j in range(img_height):
+                print(f"ID: {id+(offset*NUM_DRONES)}     value: {swarm.depth_images[id+(offset*NUM_DRONES)][i][j][0]} ")
                 if swarm.depth_images[id+(offset*NUM_DRONES)][i][j][0] > visibility_threshold:
                     world_x, world_y = calculate_world_coordinates(waypoints[id], camera_offset, j, i)
                     try:
@@ -269,7 +270,7 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     
 
 
-# In[9]:
+# In[10]:
 
 
 def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
@@ -301,7 +302,7 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
     return score, targetSeen
 
 
-# In[10]:
+# In[11]:
 
 
 evalTimings= []
@@ -376,7 +377,7 @@ class MyProblem(Problem):
                     scores[i] = -score
                     seenAr[i] = _wasSeen
                 
-                #print(f"finished scoring {time.time()-evalTime_start} seconds after starting evaluation")
+                print(f"finished scoring {time.time()-evalTime_start} seconds after starting evaluation")
                 isScored=True
            
         out["F"] = scores
@@ -390,7 +391,7 @@ class MyProblem(Problem):
         
 
 
-# In[11]:
+# In[12]:
 
 
 from pymoo.core.sampling import Sampling
@@ -413,7 +414,7 @@ termination = get_termination("n_gen", NUM_GENERATIONS)
 
 
 
-# In[12]:
+# In[13]:
 
 
 problem = MyProblem(GRID_SIZE, NUM_DRONES, NUM_GENERATIONS, waypoints, prob_density)
@@ -428,7 +429,7 @@ algorithm = DE(
 )
 
 
-# In[13]:
+# In[14]:
 
 
 import matplotlib.pyplot as plt
@@ -465,10 +466,10 @@ while runNumber<maxRuns:
     runNumber+=1
 
     #get best solution
-    try:
-        res = minimize(problem, algorithm, termination, seed=1, verbose=True)
-    except Exception as e:
-        print(f"Minimization had an Exception: {e}")
+    #try:
+    res = minimize(problem, algorithm, termination, seed=1, verbose=True)
+    #except Exception as e:
+    #    print(f"Minimization had an Exception: {e}")
     _x= np.array(res.X)*(DRONE_STEPSIZE*2)-DRONE_STEPSIZE
     best_solution = _x.reshape(-1, 2)
     
@@ -517,16 +518,17 @@ print(f"the average overlapTimings per Solution Individual was {np.mean(overlapT
 print(f"the average scoringTimings per Solution Individual was {np.mean(scoringTimings)} seconds")
 
 
-# In[10]:
+# In[ ]:
 
 
 #Kill the Simulation
-
+import os
+import signal
 run(['pkill', '--full', 'gz sim server'])
 print("gz sim server killed")
 run(['pkill', '--full', 'gz sim gui'])
 print("gz sim gui killed")
-run(['pkill', '--full', 'gz sim'])
+process.kill()
 print("gz sim killed")
 #print(process.communicate())
 
