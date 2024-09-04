@@ -25,9 +25,9 @@ parser.add_argument('--outputFile', type=str,default='../data/logs/defaultLogfil
 parser.add_argument('--numDrones', type=int, default=10, help='Number of Drones used')
 
 parser.add_argument('--popSize', type=int, default=10, help='Population Size of each Generation')
-parser.add_argument('--numGenerations', type=int, default=2, help='Number of Generations')
+parser.add_argument('--numGenerations', type=int, default=10, help='Number of Generations')
 parser.add_argument('--worldFile', type=str, default='worldQuarterForest', help='name of the world file without sdf')
-parser.add_argument('--maxRuns', type=int, default=1, help='maximum number of runs')
+parser.add_argument('--maxRuns', type=int, default=50, help='maximum number of runs')
 
 args, unknown = parser.parse_known_args()
 
@@ -121,16 +121,17 @@ swarm = Swarm(args.worldFile)
 print(f"Trying to spawn {NUM_DRONES*POPULATION_SIZE} Drones")
 tries = 0
 notStarted = True
+ids = 0
 while notStarted and tries<15:
     try:
         ids = swarm.spawn(NUM_DRONES*POPULATION_SIZE)
         notStarted = False
+        #print(ids)
     except Exception as e:
         print(f"Sim not ready after {tries} minutes, sleeping for 1 minute")
         print(e)
         time.sleep(60)
         tries = tries+1
-
 if tries>=15:
     raise Exception("Simulation couldnt be started after 15 minutes")
     
@@ -236,18 +237,14 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     visibility_threshold= 3400 #once depth is higher than this value, the ground counts as seen
     
     #adds 1/NUM_DRONES if the point is seen
+    #print(ids[0])
+    firstID = ids[0]
     
     for id in range(len(waypoints)):       
         for i in range(img_width):
             for j in range(img_height):
-                print(offset)
-                print(f"ID: {id+(offset*NUM_DRONES)}")
-                print(f"{swarm.depth_images[id+(offset*NUM_DRONES)]}")
-                print(f"{swarm.depth_images[id+(offset*NUM_DRONES)][i]}")
-                print(f"{swarm.depth_images[id+(offset*NUM_DRONES)][i][j]}")
-                print(f"{swarm.depth_images[id+(offset*NUM_DRONES)][i][j][0]}")
-                print(f"ID: {id+(offset*NUM_DRONES)}     value: {swarm.depth_images[id+(offset*NUM_DRONES)][i][j][0]} ")
-                if swarm.depth_images[id+(offset*NUM_DRONES)][i][j][0] > visibility_threshold:
+                #print(f"ID: {id+(offset*NUM_DRONES)}     value: {swarm.depth_images[id+(offset*NUM_DRONES)][i][j][0]} ")
+                if swarm.depth_images[firstID+id+(offset*NUM_DRONES)][i][j][0] > visibility_threshold:
                     world_x, world_y = calculate_world_coordinates(waypoints[id], camera_offset, j, i)
                     try:
                         world_x_idx = int(((world_x - MinX[1]) / (MaxX[1] - MinX[1])) * array_width)
@@ -360,10 +357,10 @@ class MyProblem(Problem):
         score = None
         
         waypoint_start = time.time()
-        
+        #print(ids)
         while not isScored:
             #wait until all drones received
-
+            
             if swarm.received_frames[ids[-1]]:
                 waypointTimings.append(time.time()-waypoint_start)
                 #print(f"Frames received after {time.time()-evalTime_start} seconds")
