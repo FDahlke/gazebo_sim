@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=test_swarm
+#SBATCH --job-name=QuarterForestTest
 #SBATCH --partition=all
 #SBATCH --ntasks=1
 #SBATCH --mem-per-cpu=2G
@@ -9,4 +9,4 @@
 
 srun hostname
 srun nproc
-srun apptainer exec ../apptainer/gazebo_sim-full.sif python main.py --numDrones 10 --popSize 10 --numGenerations 10 --maxRuns 10
+srun apptainer exec ../apptainer/gazebo_sim-full.sif python pyQuarterForest.py --numDrones 10 --popSize 10 --numGenerations 10 --maxRuns 10

@@ -22,9 +22,9 @@ from swarm import Swarm
 parser = argparse.ArgumentParser(description="Example script with argparse")
 
 parser.add_argument('--outputFile', type=str,default='../data/logs/defaultLogfile', help='Path where the output should be stored')
-parser.add_argument('--numDrones', type=int, default=10, help='Number of Drones used')
+parser.add_argument('--numDrones', type=int, default=5, help='Number of Drones used')
 
-parser.add_argument('--popSize', type=int, default=10, help='Population Size of each Generation')
+parser.add_argument('--popSize', type=int, default=5, help='Population Size of each Generation')
 parser.add_argument('--numGenerations', type=int, default=10, help='Number of Generations')
 parser.add_argument('--worldFile', type=str, default='worldQuarterForest', help='name of the world file without sdf')
 parser.add_argument('--maxRuns', type=int, default=50, help='maximum number of runs')
@@ -47,7 +47,7 @@ process = Popen(['gz','sim', f"../worlds/{args.worldFile}.sdf", '-r','-s'], stdo
 
 
 
-# In[3]:
+# In[4]:
 
 
 NUM_DRONES = args.numDrones
@@ -89,7 +89,7 @@ seenPercentage = 0.5
 start = time.time()
 
 
-# In[4]:
+# In[5]:
 
 
 def getProbabilityGrid(Last_Known_Position, sigma):
@@ -103,7 +103,7 @@ def getProbabilityGrid(Last_Known_Position, sigma):
     return prob_density,x,y
 
 
-# In[5]:
+# In[6]:
 
 
 #Spawn Drones and move to initial position
@@ -113,7 +113,7 @@ def getProbabilityGrid(Last_Known_Position, sigma):
 swarm = Swarm(args.worldFile)
 
 
-# In[6]:
+# In[7]:
 
 
 # Spawn X drones and keep the returning ids as handles
@@ -157,7 +157,7 @@ prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
 #print(prob_density)
 
 
-# In[7]:
+# In[8]:
 
 
 # Problem classes
@@ -171,7 +171,7 @@ from pymoo.algorithms.soo.nonconvex.de import DE
 from pymoo.operators.sampling.lhs import LHS
 
 
-# In[8]:
+# In[9]:
 
 
 #return percentage of ground visible (depth>34meter)
@@ -195,7 +195,7 @@ def calculate_world_coordinates(drone_pos, image_radius, img_x, img_y):
     return (pos_x, pos_y)
 
 
-# In[9]:
+# In[10]:
 
 
 def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
@@ -273,7 +273,7 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     
 
 
-# In[10]:
+# In[11]:
 
 
 def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
@@ -305,7 +305,7 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
     return score, targetSeen
 
 
-# In[11]:
+# In[12]:
 
 
 evalTimings= []
@@ -380,21 +380,21 @@ class MyProblem(Problem):
                     scores[i] = -score
                     seenAr[i] = _wasSeen
                 
-                print(f"finished scoring {time.time()-evalTime_start} seconds after starting evaluation")
+                #print(f"finished scoring {time.time()-evalTime_start} seconds after starting evaluation")
                 isScored=True
            
         out["F"] = scores
         out["aux1"] = seenAr
         
         evalTimings.append(time.time()-evalTime_start)   
-        print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
-        print(f"the average waypointTimings was {np.mean(waypointTimings)} seconds")
-        print(f"the average overlapTimings per Solution Individual was {np.mean(overlapTimings)} seconds")
-        print(f"the average scoringTimings per Solution Individual was {np.mean(scoringTimings)} seconds")
+        #print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
+        #print(f"the average waypointTimings was {np.mean(waypointTimings)} seconds")
+        #print(f"the average overlapTimings per Solution Individual was {np.mean(overlapTimings)} seconds")
+        #print(f"the average scoringTimings per Solution Individual was {np.mean(scoringTimings)} seconds")
         
 
 
-# In[12]:
+# In[13]:
 
 
 from pymoo.core.sampling import Sampling
@@ -417,7 +417,7 @@ termination = get_termination("n_gen", NUM_GENERATIONS)
 
 
 
-# In[13]:
+# In[14]:
 
 
 problem = MyProblem(GRID_SIZE, NUM_DRONES, NUM_GENERATIONS, waypoints, prob_density)
@@ -432,7 +432,7 @@ algorithm = DE(
 )
 
 
-# In[14]:
+# In[15]:
 
 
 import matplotlib.pyplot as plt
@@ -519,6 +519,8 @@ print(f"the average evaluation time per generation was {np.mean(evalTimings)} se
 print(f"the average waypointTimings was {np.mean(waypointTimings)} seconds")
 print(f"the average overlapTimings per Solution Individual was {np.mean(overlapTimings)} seconds")
 print(f"the average scoringTimings per Solution Individual was {np.mean(scoringTimings)} seconds")
+
+print(f"Total Time for {maxRuns} timestep was {time.time()-start} seconds")
 
 
 # In[ ]:
