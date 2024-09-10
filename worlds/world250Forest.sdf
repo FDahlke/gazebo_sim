@@ -42,6 +42,7 @@
             <generate>true</generate>
             <size>250</size>
             <trees>1000</trees>
+			<direct_spawning>true</direct_spawning>
             <ground_temperature>288.15</ground_temperature>
             <texture_size>1</texture_size>
             <species name="None">

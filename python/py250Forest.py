@@ -15,24 +15,24 @@ from swarm import Swarm
 #TODO: add constraints to drone position
 
 
-# In[2]:
+# In[7]:
 
 
 #ArgParser:
 parser = argparse.ArgumentParser(description="Example script with argparse")
 
 parser.add_argument('--outputFile', type=str,default='../data/logs/defaultLogfile', help='Path where the output should be stored')
-parser.add_argument('--numDrones', type=int, default=10, help='Number of Drones used')
+parser.add_argument('--numDrones', type=int, default=5, help='Number of Drones used')
 
-parser.add_argument('--popSize', type=int, default=10, help='Population Size of each Generation')
-parser.add_argument('--numGenerations', type=int, default=10, help='Number of Generations')
+parser.add_argument('--popSize', type=int, default=5, help='Population Size of each Generation')
+parser.add_argument('--numGenerations', type=int, default=2, help='Number of Generations')
 parser.add_argument('--worldFile', type=str, default='world250Forest', help='name of the world file without sdf')
 parser.add_argument('--maxRuns', type=int, default=50, help='maximum number of runs')
 
 args, unknown = parser.parse_known_args()
 
 
-# In[3]:
+# In[ ]:
 
 
 #Starts the simulation as a separate thread
@@ -47,14 +47,14 @@ process = Popen(['gz','sim', f"../worlds/{args.worldFile}.sdf", '-r','-s'], stdo
 
 
 
-# In[3]:
+# In[8]:
 
 
 NUM_DRONES = args.numDrones
 
-AREA_SIZE_X = 500
-AREA_SIZE_Y = 500
-GRID_SIZE = 500       # Size of the Forest
+AREA_SIZE_X = 250
+AREA_SIZE_Y = 250
+GRID_SIZE = 250       # Size of the Forest
 
 CAMERA_FOV_DEGREE = 50
 IMAGE_SIZE = 512 #How many Scanning points each image has per Row (Images are 512x512)
@@ -89,7 +89,7 @@ seenPercentage = 0.5
 start = time.time()
 
 
-# In[4]:
+# In[9]:
 
 
 def getProbabilityGrid(Last_Known_Position, sigma):
@@ -103,7 +103,7 @@ def getProbabilityGrid(Last_Known_Position, sigma):
     return prob_density,x,y
 
 
-# In[5]:
+# In[10]:
 
 
 #Spawn Drones and move to initial position
@@ -113,7 +113,7 @@ def getProbabilityGrid(Last_Known_Position, sigma):
 swarm = Swarm(args.worldFile)
 
 
-# In[6]:
+# In[11]:
 
 
 # Spawn X drones and keep the returning ids as handles
@@ -157,7 +157,7 @@ prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
 #print(prob_density)
 
 
-# In[7]:
+# In[12]:
 
 
 # Problem classes
@@ -171,7 +171,7 @@ from pymoo.algorithms.soo.nonconvex.de import DE
 from pymoo.operators.sampling.lhs import LHS
 
 
-# In[8]:
+# In[13]:
 
 
 #return percentage of ground visible (depth>34meter)
@@ -195,7 +195,7 @@ def calculate_world_coordinates(drone_pos, image_radius, img_x, img_y):
     return (pos_x, pos_y)
 
 
-# In[9]:
+# In[14]:
 
 
 def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
@@ -263,17 +263,18 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     visibility_offset=[visibility_offset_x,visibility_offset_y]
     
     #get X/Y of target
-    target_x, target_y = calculate_world_coordinates(Target_Position, camera_offset, j, i)
     target_x_idx = int(((Target_Position[0] - MinX[1]) / (MaxX[1] - MinX[1])) * array_width)
     target_y_idx = int(((Target_Position[1] - MinY[1]) / (MaxY[1] - MinY[1])) * array_height)
     
     targetXY= [target_x_idx,target_y_idx]
     
+    print(f"target is at [{Target_Position}], corresponding to {targetXY}, in the array of size [{array_width},{array_height}]")
+    
     return visibility_array, visibility_offset, targetXY
     
 
 
-# In[10]:
+# In[15]:
 
 
 def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
@@ -305,7 +306,7 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
     return score, targetSeen
 
 
-# In[11]:
+# In[16]:
 
 
 evalTimings= []
@@ -380,21 +381,21 @@ class MyProblem(Problem):
                     scores[i] = -score
                     seenAr[i] = _wasSeen
                 
-                print(f"finished scoring {time.time()-evalTime_start} seconds after starting evaluation")
+                #print(f"finished scoring {time.time()-evalTime_start} seconds after starting evaluation")
                 isScored=True
            
         out["F"] = scores
         out["aux1"] = seenAr
         
         evalTimings.append(time.time()-evalTime_start)   
-        print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
-        print(f"the average waypointTimings was {np.mean(waypointTimings)} seconds")
-        print(f"the average overlapTimings per Solution Individual was {np.mean(overlapTimings)} seconds")
-        print(f"the average scoringTimings per Solution Individual was {np.mean(scoringTimings)} seconds")
+        #print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
+        #print(f"the average waypointTimings was {np.mean(waypointTimings)} seconds")
+        #print(f"the average overlapTimings per Solution Individual was {np.mean(overlapTimings)} seconds")
+        #print(f"the average scoringTimings per Solution Individual was {np.mean(scoringTimings)} seconds")
         
 
 
-# In[12]:
+# In[17]:
 
 
 from pymoo.core.sampling import Sampling
@@ -417,7 +418,7 @@ termination = get_termination("n_gen", NUM_GENERATIONS)
 
 
 
-# In[13]:
+# In[18]:
 
 
 problem = MyProblem(GRID_SIZE, NUM_DRONES, NUM_GENERATIONS, waypoints, prob_density)
@@ -432,13 +433,13 @@ algorithm = DE(
 )
 
 
-# In[14]:
+# In[19]:
 
 
 import matplotlib.pyplot as plt
 
 
-# In[ ]:
+# In[20]:
 
 
 finished=False
@@ -478,6 +479,7 @@ while runNumber<maxRuns:
     
     #update waypoints
     waypoints = waypoints + np.pad(best_solution,((0, 0), (0, 1)),mode='constant',constant_values=0)
+    print(f"New Position: {waypoints}\n\n")
     dronePath.append(np.array([waypoints]))
     problem.waypoints = waypoints
                      
@@ -519,6 +521,8 @@ print(f"the average evaluation time per generation was {np.mean(evalTimings)} se
 print(f"the average waypointTimings was {np.mean(waypointTimings)} seconds")
 print(f"the average overlapTimings per Solution Individual was {np.mean(overlapTimings)} seconds")
 print(f"the average scoringTimings per Solution Individual was {np.mean(scoringTimings)} seconds")
+
+print(f"Total Time for {maxRuns} timestep was {time.time()-start} seconds")
 
 
 # In[ ]:

@@ -9,4 +9,4 @@
 
 srun hostname
 srun nproc
-srun apptainer exec ../apptainer/gazebo_sim-full.sif python py250Forest.py --numDrones 10 --popSize 10 --numGenerations 5 --maxRuns 10
+srun apptainer exec ../apptainer/gazebo_sim-full.sif python py250Forest.py --numDrones 10 --popSize 10 --numGenerations 5 --maxRuns 50
