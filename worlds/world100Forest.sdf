@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version="1.10">
-    <world name="worldQuarterForest">
+    <world name="world100Forest">
         <physics name="1ms" type="ignored">
             <max_step_size>0.001</max_step_size>
             <real_time_factor>1.0</real_time_factor>
@@ -40,8 +40,8 @@
             <seed>0</seed>
             <ground_texture>0</ground_texture>
             <generate>true</generate>
-            <size>500</size>
-            <trees>2500</trees>
+            <size>100</size>
+            <trees>200</trees>
 			<direct_spawning>true</direct_spawning>
             <ground_temperature>288.15</ground_temperature>
             <texture_size>1</texture_size>
