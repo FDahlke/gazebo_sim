@@ -24,9 +24,9 @@ showDiagrams = True
 parser = argparse.ArgumentParser(description="Example script with argparse")
 
 parser.add_argument('--outputFile', type=str,default='../data/logs/defaultLogfile', help='Path where the output should be stored')
-parser.add_argument('--numDrones', type=int, default=10, help='Number of Drones used')
+parser.add_argument('--numDrones', type=int, default=5, help='Number of Drones used')
 
-parser.add_argument('--popSize', type=int, default=10, help='Population Size of each Generation')
+parser.add_argument('--popSize', type=int, default=5, help='Population Size of each Generation')
 parser.add_argument('--numGenerations', type=int, default=5, help='Number of Generations')
 parser.add_argument('--worldFile', type=str, default='world100Forest', help='name of the world file without sdf')
 parser.add_argument('--maxRuns', type=int, default=10, help='maximum number of runs')
@@ -86,7 +86,11 @@ DRONE_STEPSIZE= 15
 TARGET_STEPSIZE= 7
 
 #How many Drones should see the same points for it to count as "seen"
-seenPercentage = 0.21
+seenPercentage = 0.2
+
+#ideal size of Scanned area
+#larger areas get a worse score, smaller areas a better score
+idealSize = 1024**2
 
 start = time.time()
 
@@ -167,7 +171,7 @@ def distance(a, b):
     return math.sqrt((b[0]-a[0])**2+(b[1]-a[1])**2)
 
 
-
+# minimum distance from initial target position, maximum range 
 def generate_goal_coordinate(Target_Position, min_distance=50, boundary=(-40, 40)):
     while True:
         # Generate random x and y within the boundary [-40, 40]
@@ -193,7 +197,7 @@ def generate_goal_coordinate(Target_Position, min_distance=50, boundary=(-40, 40
 #maximum distance from center for the target
 maximumTarget = 35
 #minimum distance for the target
-minimumTarget = 10
+minimumTarget = 15
 
 def generate_random_coordinate():
     while True:
@@ -202,7 +206,7 @@ def generate_random_coordinate():
         y = random.uniform(-maximumTarget, maximumTarget)
         
         # Check if the point is outside the range [-10, 10] for both x and y
-        if (not -minimumTarget <= x <= minimumTarget) and not(-minimumTarget <= y <= minimumTarget):
+        if not (-minimumTarget <= x <= minimumTarget) and not(-minimumTarget <= y <= minimumTarget):
             return np.array([x, y])
 
 Target_Position = generate_random_coordinate()
@@ -353,7 +357,9 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
     scoringArray=np.zeros(prob_density.shape)
     score=0
     targetSeen = False
-
+    
+    #print(f"Visibility Grid is of shape {visibility_grid.shape}")
+    
     for i in range(visibility_grid.shape[0]):
         for j in range(visibility_grid.shape[1]):
             visibility_Value=visibility_grid[i][j]
@@ -373,10 +379,13 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
                 else:
                     score+=tileScore
                     scoringArray[i][j]=tileScore
-    #if targetSeen:
-        #print("Saw somehting!")         
-    #plt.imshow(scoring_array, cmap='gray')
-    #plt.show()
+                    
+    #scale score based on size                
+    size = visibility_grid.shape[0]*visibility_grid.shape[1]
+    scoring_factor = idealSize/size
+    
+    #print(f"SCoring factor would be: {scoring_factor}")
+    score = score * scoring_factor
     return score, targetSeen,scoringArray
 
 
@@ -580,22 +589,20 @@ while runNumber<maxRuns:
         Last_Known_Position= Target_Position
         
         targetDetections.append([runNumber, 0])
-    
+        
+    prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
+    problem.prob_density = prob_density
     #------------------------------------------------------------
     #Print the visibiliy Grid, only for debugging purposes
     if showDiagrams:
         best_vis = best.get("aux2")
-        print(f"Visibility Grid of Best solution: \n\n")
+        print(f"Visibility Grid of Best solution:")
         plt.imshow(best_vis, cmap='gray')
         plt.show()
         best_scor = best.get("aux3")
         print(f"Scoring Grid of Best solution: \n\n")
         plt.imshow(best_scor, cmap='gray')
         plt.show()
-
-        prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
-        problem.prob_density = prob_density
-
 
         plt.figure(figsize=(4, 3))
         plt.contourf(x, y, prob_density, levels=50, cmap='hot')
