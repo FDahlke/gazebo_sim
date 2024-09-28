@@ -24,12 +24,12 @@ showDiagrams = True
 parser = argparse.ArgumentParser(description="Example script with argparse")
 
 parser.add_argument('--outputFile', type=str,default='../data/logs/defaultLogfile', help='Path where the output should be stored')
-parser.add_argument('--numDrones', type=int, default=5, help='Number of Drones used')
+parser.add_argument('--numDrones', type=int, default=10, help='Number of Drones used')
 
-parser.add_argument('--popSize', type=int, default=5, help='Population Size of each Generation')
+parser.add_argument('--popSize', type=int, default=10, help='Population Size of each Generation')
 parser.add_argument('--numGenerations', type=int, default=5, help='Number of Generations')
 parser.add_argument('--worldFile', type=str, default='world100Forest', help='name of the world file without sdf')
-parser.add_argument('--maxRuns', type=int, default=10, help='maximum number of runs')
+parser.add_argument('--maxRuns', type=int, default=20, help='maximum number of runs')
 parser.add_argument('--movementType', type=int, default=1, help='0: Static \n1: Line \n2: random')
 
 args, unknown = parser.parse_known_args()
@@ -53,9 +53,7 @@ showDiagrams = False
 
 NUM_DRONES = args.numDrones
 
-AREA_SIZE_X = 250
-AREA_SIZE_Y = 250
-GRID_SIZE = 250       # Size of the Forest
+GRID_SIZE = 100       # Size of the Forest
 
 CAMERA_FOV_DEGREE = 50
 IMAGE_SIZE = 512 #How many Scanning points each image has per Row (Images are 512x512)
@@ -172,7 +170,7 @@ def distance(a, b):
 
 
 # minimum distance from initial target position, maximum range 
-def generate_goal_coordinate(Target_Position, min_distance=50, boundary=(-40, 40)):
+def generate_goal_coordinate(Target_Position, min_distance=70, boundary=(-40, 40)):
     while True:
         # Generate random x and y within the boundary [-40, 40]
         new_x = random.uniform(boundary[0], boundary[1])
@@ -210,9 +208,10 @@ def generate_random_coordinate():
             return np.array([x, y])
 
 Target_Position = generate_random_coordinate()
+
 Last_Known_Position = Target_Position
 print(f"Target is at position {Target_Position}")
-
+initial_Target = Target_Position
 
 goal_position,movement_vector = generate_goal_coordinate(Target_Position)
 
@@ -368,17 +367,24 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
             #    print(f"Im in that range, distance: {visibility_Value}")
             
             #only add score if half the drones see square
-            if visibility_Value>=seenPercentage:
-                tileScore = prob_density[i+visibility_offset[0]][j+visibility_offset[1]]*visibility_Value
+            try:
+                if visibility_Value>=seenPercentage:
+                    tileScore = prob_density[i+visibility_offset[0]][j+visibility_offset[1]]*visibility_Value
+
+                    if i-3<=targetXY[0]<=i+3 and j-3<=targetXY[1]<=j+3:
+                        targetSeen=True
+                        #print("Saw somehting!")
+                        score+=(tileScore*1000)
+                        scoringArray[i][j]=tileScore*1000
+                    else:
+                        score+=tileScore
+                        scoringArray[i][j]=tileScore
+            except Exception as e:
+                print("ERROR while assigning tilescore")
+                print(f"Scoring array: {scoringArray.shape}")
+                print(f"visibility_grid array: {visibility_grid.shape}")
+                print(e)
                 
-                if i-3<=targetXY[0]<=i+3 and j-3<=targetXY[1]<=j+3:
-                    targetSeen=True
-                    #print("Saw somehting!")
-                    score+=(tileScore*1000)
-                    scoringArray[i][j]=tileScore*1000
-                else:
-                    score+=tileScore
-                    scoringArray[i][j]=tileScore
                     
     #scale score based on size                
     size = visibility_grid.shape[0]*visibility_grid.shape[1]
@@ -547,6 +553,8 @@ dronePath= []
 #dronePath = np.array([])
 targetDetections = []
 
+
+firstDetection = False
 while runNumber<maxRuns:
     if  time.time()-start> 72000 or finished:
         print("Time limit reached, stopping")
@@ -583,12 +591,17 @@ while runNumber<maxRuns:
     best_F = best.get("F")
     #print(f"Score: {best_F} and aux: {best_aux} test")
     #print(f"Waypoints: {waypoints}")
+    
+    #if the target was seen
     if best_aux:
+        firstDetection=True
         print("Target Seen!\nUpdating target Position and resetting Sigma")
         sigma = 14
         Last_Known_Position= Target_Position
         
-        targetDetections.append([runNumber, 0])
+        targetDetections.append(1)
+    elif firstDetection:
+        targetDetections.append(0)
         
     prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
     problem.prob_density = prob_density
@@ -598,16 +611,24 @@ while runNumber<maxRuns:
         best_vis = best.get("aux2")
         print(f"Visibility Grid of Best solution:")
         plt.imshow(best_vis, cmap='gray')
+        plt.arrow(initial_Target[0], initial_Target[1], goal_position[0]-initial_Target[0], goal_position[1]-initial_Target[1], length_includes_head=True,
+          head_width=0.08, head_length=0.00002, color='c')
         plt.show()
         best_scor = best.get("aux3")
         print(f"Scoring Grid of Best solution: \n\n")
         plt.imshow(best_scor, cmap='gray')
+        plt.arrow(initial_Target[0], initial_Target[1], goal_position[0]-initial_Target[0], goal_position[1]-initial_Target[1], length_includes_head=True,
+          head_width=0.08, head_length=0.00002, color='c')
         plt.show()
 
         plt.figure(figsize=(4, 3))
         plt.contourf(x, y, prob_density, levels=50, cmap='hot')
         plt.colorbar(label='Probability Density')
-        plt.scatter(Last_Known_Position[0],Last_Known_Position[1], color='blue', label='Last Known Position')
+        #line the target is moving
+        plt.arrow(initial_Target[0], initial_Target[1], goal_position[0]-initial_Target[0], goal_position[1]-initial_Target[1], length_includes_head=True,
+          head_width=0.08, head_length=0.00002, color='c')
+        
+        plt.scatter(Target_Position[0],Target_Position[1], color='blue', label='Target Position')
         plt.scatter(waypoints[:, 0],waypoints[:, 1], color='green', label='Drones')
         plt.show()
     #------------------------------------------------------------------
@@ -620,7 +641,7 @@ while runNumber<maxRuns:
 print(f"Drone Path:\n{dronePath}\n\n\n\n")
 try:
     print(f"\n\nTarget was first detected in Step {targetDetections[0]}")
-    print(f"Afterwards target was detected in {np.mean(targetDetections)}% of the following timesteps")
+    print(f"Afterwards target was detected in {np.mean(o)}% of the following timesteps")
     print("\n\n\n")
 except:
     print("Error, no target detections")
