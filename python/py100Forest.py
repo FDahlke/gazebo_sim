@@ -67,12 +67,12 @@ MOVEMENT_TYPE = args.movementType
 
 maxRuns = args.maxRuns
 
-grid_offset=GRID_SIZE/2
+
 
 camera_fov=np.deg2rad(CAMERA_FOV_DEGREE)
 camera_offset= 35 * np.tan(camera_fov/2)
 
-prob_array_size= int(np.ceil((GRID_SIZE*512)/(camera_offset*2)))
+
 
 
 #each "Step" is 10 seconds in this Example
@@ -96,6 +96,10 @@ start = time.time()
 # In[4]:
 
 
+grid_offset=GRID_SIZE/2
+camera_fov=np.deg2rad(CAMERA_FOV_DEGREE)
+camera_offset= 35 * np.tan(camera_fov/2)
+prob_array_size= int(np.ceil((GRID_SIZE*512)/(camera_offset*2)))
 def getProbabilityGrid(Last_Known_Position, sigma):
     #Create Target Probability Grid
     x = np.linspace(-grid_offset, grid_offset, prob_array_size)
@@ -366,6 +370,8 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
             #if i-3<=targetXY[0]<=i+3 and j-3<=targetXY[1]<=j+3:
             #    print(f"Im in that range, distance: {visibility_Value}")
             
+            
+            
             #only add score if half the drones see square
             try:
                 if visibility_Value>=seenPercentage:
@@ -379,8 +385,15 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
                     else:
                         score+=tileScore
                         scoringArray[i][j]=tileScore
+            #except Exception as e:
+            #    print("ERROR while assigning tilescore")
+            #    print(f"Scoring array: {scoringArray.shape}")
+            #     print(f"visibility_grid array: {visibility_grid.shape}")
+            #    print(e)
             except:
+                #if it scans something "outside" of the scan area it skips the points
                 break
+                
                 
                     
     #scale score based on size                
@@ -529,7 +542,7 @@ import matplotlib.pyplot as plt
 import copy
 
 
-# In[ ]:
+# In[17]:
 
 
 finished=False
@@ -547,9 +560,8 @@ sigma=10
 print(f"Starting now, at {time.time() - start}")
 
 dronePath= []
-#dronePath = np.array([])
 targetDetections = []
-
+solutionScores= []
 
 firstDetection = False
 while runNumber<maxRuns:
@@ -579,8 +591,10 @@ while runNumber<maxRuns:
     
     dronePath.append(np.array([waypoints]))
     problem.waypoints = waypoints
-                     
-    sigma+=TARGET_STEPSIZE
+    
+    solutionScores.append(res.F[0])
+    
+    sigma+=(TARGET_STEPSIZE*0.8)
     
     #if target was seen:
     best = res.opt[0]
@@ -591,9 +605,9 @@ while runNumber<maxRuns:
     
     #if the target was seen
     if best_aux:
-        firstDetection=True
+        firstDetection=runNumber
         print("Target Seen!\nUpdating target Position and resetting Sigma")
-        sigma = 14
+        sigma = TARGET_STEPSIZE
         Last_Known_Position= Target_Position
         
         targetDetections.append(1)
@@ -637,11 +651,15 @@ while runNumber<maxRuns:
 
 print(f"Drone Path:\n{dronePath}\n\n\n\n")
 try:
-    print(f"\n\nTarget was first detected in Step {targetDetections[0]}")
-    print(f"Afterwards target was detected in {np.mean(o)}% of the following timesteps")
-    print("\n\n\n")
+    print(f"\n\nTarget was first detected in Step {firstDetection}")
+    print(f"Target Detections: {targetDetections}")
+    print(f"Target was detected in {np.mean(targetDetections)}% of the following timesteps")
+    print("\n")
 except:
     print("Error, no target detections")
+
+print(f"Solution Scores:\n{solutionScores}")
+    
 print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
 print(f"the average waypointTimings was {np.mean(waypointTimings)} seconds")
 print(f"the average overlapTimings per Solution Individual was {np.mean(overlapTimings)} seconds")
