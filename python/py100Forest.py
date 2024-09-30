@@ -379,11 +379,8 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
                     else:
                         score+=tileScore
                         scoringArray[i][j]=tileScore
-            except Exception as e:
-                print("ERROR while assigning tilescore")
-                print(f"Scoring array: {scoringArray.shape}")
-                print(f"visibility_grid array: {visibility_grid.shape}")
-                print(e)
+            except:
+                break
                 
                     
     #scale score based on size                
