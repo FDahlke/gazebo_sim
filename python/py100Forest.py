@@ -84,7 +84,7 @@ DRONE_STEPSIZE= 15
 TARGET_STEPSIZE= 7
 
 #How many Drones should see the same points for it to count as "seen"
-seenPercentage = 0.2
+seenPercentage = 0.21
 
 #ideal size of Scanned area
 #larger areas get a worse score, smaller areas a better score
