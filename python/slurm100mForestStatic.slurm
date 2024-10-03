@@ -19,4 +19,4 @@ export GZ_DISCOVERY_SRV_PORT=$(( 20318 + PORT_OFFSET + 2*SLURM_ARRAY_TASK_ID ))
 srun echo $GZ_DISCOVERY_MSG_PORT
 srun echo $GZ_DISCOVERY_SRV_PORT    
 
-srun apptainer exec ../apptainer/gazebo_sim-full.sif python py100Forest.py --numDrones 10 --popSize 10 --numGenerations 5 --maxRuns 50 --movementType 0
+srun apptainer exec ../apptainer/gazebo_sim-full.sif python py100Forest.py --numDrones 5 --popSize 10 --numGenerations 5 --maxRuns 50 --movementType 0

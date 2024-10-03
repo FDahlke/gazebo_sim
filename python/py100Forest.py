@@ -222,7 +222,7 @@ goal_position,movement_vector = generate_goal_coordinate(Target_Position)
 
 updateTargetPosition = update_Target_Position_line
 if(MOVEMENT_TYPE==2):
-    print(using random movement)
+    print("using random movement")
     updateTargetPosition =update_Target_Position_random
 
 # First waypoints
