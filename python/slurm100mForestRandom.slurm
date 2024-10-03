@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=100Forest_line
+#SBATCH --job-name=100Forest_rnd
 #SBATCH --partition=all
 #SBATCH --ntasks=1
 #SBATCH --mem-per-cpu=2G
