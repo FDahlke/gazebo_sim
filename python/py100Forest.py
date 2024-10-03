@@ -17,7 +17,7 @@ from swarm import Swarm
 showDiagrams = True
 
 
-# In[2]:
+# In[15]:
 
 
 #ArgParser:
@@ -26,11 +26,11 @@ parser = argparse.ArgumentParser(description="Example script with argparse")
 parser.add_argument('--outputFile', type=str,default='../data/logs/defaultLogfile', help='Path where the output should be stored')
 parser.add_argument('--numDrones', type=int, default=10, help='Number of Drones used')
 
-parser.add_argument('--popSize', type=int, default=10, help='Population Size of each Generation')
+parser.add_argument('--popSize', type=int, default=5, help='Population Size of each Generation')
 parser.add_argument('--numGenerations', type=int, default=5, help='Number of Generations')
 parser.add_argument('--worldFile', type=str, default='world100Forest', help='name of the world file without sdf')
-parser.add_argument('--maxRuns', type=int, default=20, help='maximum number of runs')
-parser.add_argument('--movementType', type=int, default=1, help='0: Static \n1: Line \n2: random')
+parser.add_argument('--maxRuns', type=int, default=5, help='maximum number of runs')
+parser.add_argument('--movementType', type=int, default=2, help='0: Static \n1: Line \n2: random')
 
 args, unknown = parser.parse_known_args()
 
@@ -48,7 +48,7 @@ process = Popen(['gz','sim', f"../worlds/{args.worldFile}.sdf", '-r','-s'], stdo
 showDiagrams = False
 
 
-# In[3]:
+# In[16]:
 
 
 NUM_DRONES = args.numDrones
@@ -84,7 +84,7 @@ DRONE_STEPSIZE= 15
 TARGET_STEPSIZE= 7
 
 #How many Drones should see the same points for it to count as "seen"
-seenPercentage = 0.21
+seenPercentage = 1/NUM_DRONES*2
 
 #ideal size of Scanned area
 #larger areas get a worse score, smaller areas a better score
@@ -93,7 +93,7 @@ idealSize = 1024**2
 start = time.time()
 
 
-# In[4]:
+# In[17]:
 
 
 grid_offset=GRID_SIZE/2
@@ -111,7 +111,7 @@ def getProbabilityGrid(Last_Known_Position, sigma):
     return prob_density,x,y
 
 
-# In[5]:
+# In[18]:
 
 
 #Spawn Drones and move to initial position
@@ -121,7 +121,7 @@ def getProbabilityGrid(Last_Known_Position, sigma):
 swarm = Swarm(args.worldFile)
 
 
-# In[6]:
+# In[19]:
 
 
 # Spawn X drones and keep the returning ids as handles
@@ -147,19 +147,19 @@ print("Drones Spawned Sucessfully")
 
 
 
-# In[7]:
+# In[20]:
 
 
 def update_Target_Position_random(Target_Position):
     #creates a random vector, scales it to TARGET_STEPSIZE and adds it to target Position
-    new_x = random.uniform(-1, 1)
-    new_y = random.uniform(-1, 1)
-        
-        # Calculate the distance from the first coordinate
-    dist = distance(Target_Position, (new_x, new_y))
+    notFinished = True
+    while notFinished:
+        new_x = random.uniform(-TARGET_STEPSIZE, TARGET_STEPSIZE)
+        new_y = random.uniform(-TARGET_STEPSIZE, TARGET_STEPSIZE)
+        if(-40<Target_Position[0]+new_x<40 and (-40<Target_Position[1]+new_y<40)):
+            Target_Position+([x,y])
     
-    random_vec = np.array([new_x,new_y])
-    return Target_Position+((random_vec/dist)*TARGET_STEPSIZE)
+    return Target_Position+([x,y])
     
 def update_Target_Position_line(Target_Position):
     
@@ -191,7 +191,7 @@ def generate_goal_coordinate(Target_Position, min_distance=70, boundary=(-40, 40
             return goal_position, movement_vector
 
 
-# In[8]:
+# In[21]:
 
 
 #Initialize Target Position
@@ -222,7 +222,8 @@ goal_position,movement_vector = generate_goal_coordinate(Target_Position)
 
 updateTargetPosition = update_Target_Position_line
 if(MOVEMENT_TYPE==2):
-    updatePosition =update_Target_Position_random
+    print(using random movement)
+    updateTargetPosition =update_Target_Position_random
 
 # First waypoints
 waypoints = np.empty((0,3),float)
@@ -240,7 +241,7 @@ prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
 #print(prob_density)
 
 
-# In[9]:
+# In[22]:
 
 
 # Problem classes
@@ -254,7 +255,7 @@ from pymoo.algorithms.soo.nonconvex.de import DE
 from pymoo.operators.sampling.lhs import LHS
 
 
-# In[10]:
+# In[23]:
 
 
 #return percentage of ground visible (depth>34meter)
@@ -274,7 +275,7 @@ def calculate_world_coordinates(drone_pos, image_radius, img_x, img_y):
     return (pos_x, pos_y)
 
 
-# In[11]:
+# In[24]:
 
 
 def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
@@ -352,7 +353,7 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     
 
 
-# In[12]:
+# In[25]:
 
 
 def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
@@ -361,23 +362,22 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
     score=0
     targetSeen = False
     
+    #how far away from target position it gets detected
+    targetRange = 4
+    
+    
     #print(f"Visibility Grid is of shape {visibility_grid.shape}")
     
     for i in range(visibility_grid.shape[0]):
         for j in range(visibility_grid.shape[1]):
-            visibility_Value=visibility_grid[i][j]
+            visibility_Value=visibility_grid[i][j]           
             
-            #if i-3<=targetXY[0]<=i+3 and j-3<=targetXY[1]<=j+3:
-            #    print(f"Im in that range, distance: {visibility_Value}")
-            
-            
-            
-            #only add score if half the drones see square
+            #only add score if >2 the drones see square
             try:
                 if visibility_Value>=seenPercentage:
                     tileScore = prob_density[i+visibility_offset[0]][j+visibility_offset[1]]*visibility_Value
 
-                    if i-3<=targetXY[0]<=i+3 and j-3<=targetXY[1]<=j+3:
+                    if i-targetRange<=targetXY[0]<=i+targetRange and j-targetRange<=targetXY[1]<=j+targetRange:
                         targetSeen=True
                         #print("Saw somehting!")
                         score+=(tileScore*1000)
@@ -385,11 +385,6 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
                     else:
                         score+=tileScore
                         scoringArray[i][j]=tileScore
-            #except Exception as e:
-            #    print("ERROR while assigning tilescore")
-            #    print(f"Scoring array: {scoringArray.shape}")
-            #     print(f"visibility_grid array: {visibility_grid.shape}")
-            #    print(e)
             except:
                 #if it scans something "outside" of the scan area it skips the points
                 break
@@ -405,7 +400,7 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
     return score, targetSeen,scoringArray
 
 
-# In[13]:
+# In[26]:
 
 
 evalTimings= []
@@ -476,18 +471,12 @@ class MyProblem(Problem):
                     scoring_start = time.time()
                     score, _wasSeen,scoringArray = scoreThatThing(self.prob_density,visibility_grid,visibility_offset,targetXY)
                     scoringTimings.append(time.time()-scoring_start)
-                    #print time
                     
                     scores[i] = -score
-                    #print(f"TargetSeen: {_wasSeen}")
                     seenAr[i] = _wasSeen
-                    #print(f"Waypoints: {solutionWaypoints}")
-                    #print(visibility_grid)
+                    
                     visibilityAr.append(copy.deepcopy(visibility_grid))
                     scoringAr.append(copy.deepcopy(scoringArray))
-                    #print(visibilityAr)
-                
-                #print(f"finished scoring {time.time()-evalTime_start} seconds after starting evaluation")
                 isScored=True
         
         out["F"] = scores
@@ -503,7 +492,7 @@ class MyProblem(Problem):
         
 
 
-# In[14]:
+# In[27]:
 
 
 from pymoo.core.sampling import Sampling
@@ -520,7 +509,7 @@ from pymoo.termination import get_termination
 termination = get_termination("n_gen", NUM_GENERATIONS)
 
 
-# In[15]:
+# In[28]:
 
 
 problem = MyProblem(GRID_SIZE, NUM_DRONES, NUM_GENERATIONS, waypoints, prob_density)
@@ -535,14 +524,14 @@ algorithm = DE(
 )
 
 
-# In[16]:
+# In[29]:
 
 
 import matplotlib.pyplot as plt
 import copy
 
 
-# In[17]:
+# In[ ]:
 
 
 finished=False
@@ -561,6 +550,7 @@ print(f"Starting now, at {time.time() - start}")
 
 dronePath= []
 targetDetections = []
+Detections = []
 solutionScores= []
 
 firstDetection = False
@@ -572,7 +562,7 @@ while runNumber<maxRuns:
     #print(f"Starting Run number {runNumber} at time: {time.time() - start} ")
     #print(f"Swarm is currently at\n {problem.waypoints}")
     runNumber+=1
-
+    print(f"Run {runNumber}")
     #get best solution
     #try:
     res = minimize(problem, algorithm, termination, seed=1, verbose=True)
@@ -613,6 +603,7 @@ while runNumber<maxRuns:
         targetDetections.append(1)
     elif firstDetection:
         targetDetections.append(0)
+    Detections.append(best_aux)
         
     prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
     problem.prob_density = prob_density
@@ -622,14 +613,14 @@ while runNumber<maxRuns:
         best_vis = best.get("aux2")
         print(f"Visibility Grid of Best solution:")
         plt.imshow(best_vis, cmap='gray')
-        plt.arrow(initial_Target[0], initial_Target[1], goal_position[0]-initial_Target[0], goal_position[1]-initial_Target[1], length_includes_head=True,
-          head_width=0.08, head_length=0.00002, color='c')
+        #plt.arrow(initial_Target[0], initial_Target[1], goal_position[0]-initial_Target[0], goal_position[1]-initial_Target[1], length_includes_head=True,
+        #  head_width=0.08, head_length=0.00002, color='c')
         plt.show()
         best_scor = best.get("aux3")
         print(f"Scoring Grid of Best solution: \n\n")
         plt.imshow(best_scor, cmap='gray')
-        plt.arrow(initial_Target[0], initial_Target[1], goal_position[0]-initial_Target[0], goal_position[1]-initial_Target[1], length_includes_head=True,
-          head_width=0.08, head_length=0.00002, color='c')
+        #plt.arrow(initial_Target[0], initial_Target[1], goal_position[0]-initial_Target[0], goal_position[1]-initial_Target[1], length_includes_head=True,
+        #  head_width=0.08, head_length=0.00002, color='c')
         plt.show()
 
         plt.figure(figsize=(4, 3))
@@ -644,7 +635,7 @@ while runNumber<maxRuns:
         plt.show()
     #------------------------------------------------------------------
     
-    print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
+    #print(f"the average evaluation time per generation was {np.mean(evalTimings)} seconds")
     #print(f"the average waypointTimings was {np.mean(waypointTimings)} seconds")
     #print(f"the average overlapTimings per Solution Individual was {np.mean(overlapTimings)} seconds")
     #print(f"the average scoringTimings per Solution Individual was {np.mean(scoringTimings)} seconds")
@@ -652,8 +643,8 @@ while runNumber<maxRuns:
 print(f"Drone Path:\n{dronePath}\n\n\n\n")
 try:
     print(f"\n\nTarget was first detected in Step {firstDetection}")
-    print(f"Target Detections: {targetDetections}")
-    print(f"Target was detected in {np.mean(targetDetections)}% of the following timesteps")
+    print(f"Target Detections: {Detections}")
+    print(f"Target was detected in {np.mean(targetDetections)*100}% of the following timesteps")
     print("\n")
 except:
     print("Error, no target detections")
