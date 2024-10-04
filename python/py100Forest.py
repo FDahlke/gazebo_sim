@@ -17,7 +17,7 @@ from swarm import Swarm
 showDiagrams = True
 
 
-# In[15]:
+# In[18]:
 
 
 #ArgParser:
@@ -48,7 +48,7 @@ process = Popen(['gz','sim', f"../worlds/{args.worldFile}.sdf", '-r','-s'], stdo
 showDiagrams = False
 
 
-# In[16]:
+# In[19]:
 
 
 NUM_DRONES = args.numDrones
@@ -93,7 +93,7 @@ idealSize = 1024**2
 start = time.time()
 
 
-# In[17]:
+# In[20]:
 
 
 grid_offset=GRID_SIZE/2
@@ -111,7 +111,7 @@ def getProbabilityGrid(Last_Known_Position, sigma):
     return prob_density,x,y
 
 
-# In[18]:
+# In[21]:
 
 
 #Spawn Drones and move to initial position
@@ -121,7 +121,7 @@ def getProbabilityGrid(Last_Known_Position, sigma):
 swarm = Swarm(args.worldFile)
 
 
-# In[19]:
+# In[22]:
 
 
 # Spawn X drones and keep the returning ids as handles
@@ -147,7 +147,7 @@ print("Drones Spawned Sucessfully")
 
 
 
-# In[20]:
+# In[23]:
 
 
 def update_Target_Position_random(Target_Position):
@@ -191,7 +191,7 @@ def generate_goal_coordinate(Target_Position, min_distance=70, boundary=(-40, 40
             return goal_position, movement_vector
 
 
-# In[21]:
+# In[24]:
 
 
 #Initialize Target Position
@@ -241,7 +241,7 @@ prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
 #print(prob_density)
 
 
-# In[22]:
+# In[25]:
 
 
 # Problem classes
@@ -255,7 +255,7 @@ from pymoo.algorithms.soo.nonconvex.de import DE
 from pymoo.operators.sampling.lhs import LHS
 
 
-# In[23]:
+# In[26]:
 
 
 #return percentage of ground visible (depth>34meter)
@@ -275,7 +275,7 @@ def calculate_world_coordinates(drone_pos, image_radius, img_x, img_y):
     return (pos_x, pos_y)
 
 
-# In[24]:
+# In[27]:
 
 
 def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
@@ -353,7 +353,7 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     
 
 
-# In[25]:
+# In[28]:
 
 
 def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
@@ -380,8 +380,8 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
                     if i-targetRange<=targetXY[0]<=i+targetRange and j-targetRange<=targetXY[1]<=j+targetRange:
                         targetSeen=True
                         #print("Saw somehting!")
-                        score+=(tileScore*1000)
-                        scoringArray[i][j]=tileScore*1000
+                        score+=(tileScore*10000)
+                        scoringArray[i][j]=tileScore*10000
                     else:
                         score+=tileScore
                         scoringArray[i][j]=tileScore
@@ -390,7 +390,8 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
                 break
                 
                 
-                    
+    #if targetSeen:
+    #    score+= 1000
     #scale score based on size                
     size = visibility_grid.shape[0]*visibility_grid.shape[1]
     scoring_factor = idealSize/size
@@ -400,7 +401,7 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
     return score, targetSeen,scoringArray
 
 
-# In[26]:
+# In[29]:
 
 
 evalTimings= []
@@ -492,7 +493,7 @@ class MyProblem(Problem):
         
 
 
-# In[27]:
+# In[30]:
 
 
 from pymoo.core.sampling import Sampling
@@ -509,7 +510,7 @@ from pymoo.termination import get_termination
 termination = get_termination("n_gen", NUM_GENERATIONS)
 
 
-# In[28]:
+# In[31]:
 
 
 problem = MyProblem(GRID_SIZE, NUM_DRONES, NUM_GENERATIONS, waypoints, prob_density)
@@ -524,7 +525,7 @@ algorithm = DE(
 )
 
 
-# In[29]:
+# In[32]:
 
 
 import matplotlib.pyplot as plt
