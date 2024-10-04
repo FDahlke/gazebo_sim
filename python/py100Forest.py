@@ -156,9 +156,12 @@ def update_Target_Position_random(Target_Position):
     new_y = random.uniform(-1, 1)
             
     # Calculate the distance from the first coordinate
-    dist = distance(Target_Position, (new_x, new_y))
+    dist = distance(Target_Position, [new_x, new_y])
     random_vec = np.array([new_x,new_y])
-    return Target_Position+((random_vec/dist)*TARGET_STEPSIZE)
+    print(f"random vec{random_vec}, dist: {dist}")
+    newPos = Target_Position+((random_vec/dist)*TARGET_STEPSIZE)
+    print(f"New Pos: {newPos}")
+    return newPos
 
     
 def update_Target_Position_line(Target_Position):
