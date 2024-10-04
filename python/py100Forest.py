@@ -152,14 +152,14 @@ print("Drones Spawned Sucessfully")
 
 def update_Target_Position_random(Target_Position):
     #creates a random vector, scales it to TARGET_STEPSIZE and adds it to target Position
-    notFinished = True
-    while notFinished:
-        new_x = random.uniform(-TARGET_STEPSIZE, TARGET_STEPSIZE)
-        new_y = random.uniform(-TARGET_STEPSIZE, TARGET_STEPSIZE)
-        if(-40<Target_Position[0]+new_x<40 and (-40<Target_Position[1]+new_y<40)):
-            Target_Position+([x,y])
-    
-    return Target_Position+([x,y])
+    new_x = random.uniform(-1, 1)
+    new_y = random.uniform(-1, 1)
+            
+    # Calculate the distance from the first coordinate
+    dist = distance(Target_Position, (new_x, new_y))
+    random_vec = np.array([new_x,new_y])
+    return Target_Position+((random_vec/dist)*TARGET_STEPSIZE)
+
     
 def update_Target_Position_line(Target_Position):
     
