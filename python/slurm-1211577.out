@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "/var/spool/slurmd/job1211577/slurm_script", line 13, in <module>
-    from swarm import Swarm
-ModuleNotFoundError: No module named 'swarm'

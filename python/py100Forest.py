@@ -17,7 +17,7 @@ from swarm import Swarm
 showDiagrams = True
 
 
-# In[18]:
+# In[45]:
 
 
 #ArgParser:
@@ -27,9 +27,9 @@ parser.add_argument('--outputFile', type=str,default='../data/logs/defaultLogfil
 parser.add_argument('--numDrones', type=int, default=10, help='Number of Drones used')
 
 parser.add_argument('--popSize', type=int, default=5, help='Population Size of each Generation')
-parser.add_argument('--numGenerations', type=int, default=5, help='Number of Generations')
+parser.add_argument('--numGenerations', type=int, default=2, help='Number of Generations')
 parser.add_argument('--worldFile', type=str, default='world100Forest', help='name of the world file without sdf')
-parser.add_argument('--maxRuns', type=int, default=5, help='maximum number of runs')
+parser.add_argument('--maxRuns', type=int, default=10, help='maximum number of runs')
 parser.add_argument('--movementType', type=int, default=2, help='0: Static \n1: Line \n2: random')
 
 args, unknown = parser.parse_known_args()
@@ -147,10 +147,11 @@ print("Drones Spawned Sucessfully")
 
 
 
-# In[23]:
+# In[47]:
 
 
 def update_Target_Position_random(Target_Position):
+    print(f"Position before: {Target_Position}")
     #creates a random vector, scales it to TARGET_STEPSIZE and adds it to target Position
     new_x = random.uniform(-1, 1)
     new_y = random.uniform(-1, 1)
@@ -194,7 +195,7 @@ def generate_goal_coordinate(Target_Position, min_distance=70, boundary=(-40, 40
             return goal_position, movement_vector
 
 
-# In[24]:
+# In[35]:
 
 
 #Initialize Target Position
@@ -244,7 +245,7 @@ prob_density,x,y = getProbabilityGrid(Last_Known_Position,sigma)
 #print(prob_density)
 
 
-# In[25]:
+# In[36]:
 
 
 # Problem classes
@@ -258,7 +259,7 @@ from pymoo.algorithms.soo.nonconvex.de import DE
 from pymoo.operators.sampling.lhs import LHS
 
 
-# In[26]:
+# In[37]:
 
 
 #return percentage of ground visible (depth>34meter)
@@ -278,7 +279,7 @@ def calculate_world_coordinates(drone_pos, image_radius, img_x, img_y):
     return (pos_x, pos_y)
 
 
-# In[27]:
+# In[38]:
 
 
 def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
@@ -356,7 +357,7 @@ def getOverlapArray(waypoints,offset,img_width=512,img_height=512):
     
 
 
-# In[28]:
+# In[39]:
 
 
 def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
@@ -392,9 +393,9 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
                 #if it scans something "outside" of the scan area it skips the points
                 break
                 
-                
-    #if targetSeen:
-    #    score+= 1000
+    if targetSeen:
+        score+= 1000
+        
     #scale score based on size                
     size = visibility_grid.shape[0]*visibility_grid.shape[1]
     scoring_factor = idealSize/size
@@ -404,7 +405,7 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
     return score, targetSeen,scoringArray
 
 
-# In[29]:
+# In[40]:
 
 
 evalTimings= []
@@ -496,7 +497,7 @@ class MyProblem(Problem):
         
 
 
-# In[30]:
+# In[41]:
 
 
 from pymoo.core.sampling import Sampling
@@ -513,7 +514,7 @@ from pymoo.termination import get_termination
 termination = get_termination("n_gen", NUM_GENERATIONS)
 
 
-# In[31]:
+# In[42]:
 
 
 problem = MyProblem(GRID_SIZE, NUM_DRONES, NUM_GENERATIONS, waypoints, prob_density)
@@ -528,14 +529,14 @@ algorithm = DE(
 )
 
 
-# In[32]:
+# In[43]:
 
 
 import matplotlib.pyplot as plt
 import copy
 
 
-# In[ ]:
+# In[46]:
 
 
 finished=False
