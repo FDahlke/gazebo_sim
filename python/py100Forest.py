@@ -384,8 +384,8 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
                     if i-targetRange<=targetXY[0]<=i+targetRange and j-targetRange<=targetXY[1]<=j+targetRange:
                         targetSeen=True
                         #print("Saw somehting!")
-                        score+=(tileScore*10000)
-                        scoringArray[i][j]=tileScore*10000
+                        score+=(tileScore*1000)
+                        scoringArray[i][j]=tileScore*1000
                     else:
                         score+=tileScore
                         scoringArray[i][j]=tileScore
@@ -394,7 +394,7 @@ def scoreThatThing(prob_density,visibility_grid,visibility_offset, targetXY):
                 break
                 
     if targetSeen:
-        score+= 1000
+        score+= 5000
         
     #scale score based on size                
     size = visibility_grid.shape[0]*visibility_grid.shape[1]
