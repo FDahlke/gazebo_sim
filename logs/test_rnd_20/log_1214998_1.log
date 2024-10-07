@@ -1,0 +1,210 @@
+ant13
+32
+20319
+20320
+
+ArgumentError: activate does not accept more than one argument:
+['python', 'py100Forest.py', '--numDrones', '20', '--popSize', '10', '--numGenerations', '5', '--maxRuns', '50', '--movementType', '2']
+
+
+no change     /root/miniconda/condabin/conda
+no change     /root/miniconda/bin/conda
+no change     /root/miniconda/bin/conda-env
+no change     /root/miniconda/bin/activate
+no change     /root/miniconda/bin/deactivate
+no change     /root/miniconda/etc/profile.d/conda.sh
+no change     /root/miniconda/etc/fish/conf.d/conda.fish
+no change     /root/miniconda/shell/condabin/Conda.psm1
+no change     /root/miniconda/shell/condabin/conda-hook.ps1
+no change     /root/miniconda/lib/python3.12/site-packages/xontrib/conda.xsh
+no change     /root/miniconda/etc/profile.d/conda.csh
+no change     /home/fdahlke/.bashrc
+No action taken.
+Subscribed successfully
+Trying to spawn 200 Drones
+Sim not ready after 0 minutes, sleeping for 1 minute
+Request to spawn drones timed out!
+Drones Spawned Sucessfully
+Target is at position [-15.51552347  19.86664468]
+Target is moving towards [ 32.18901512 -35.25880527] (Distance: 72.9008795157637) with vector [ 4.58062745 -5.29318922]
+using random movement
+
+Compiled modules for significant speedup can not be used!
+https://pymoo.org/installation.html#installation
+
+To disable this warning:
+from pymoo.config import Config
+Config.warnings['not_compiled'] = False
+
+Starting now, at 61.693142890930176
+Run 1
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -8.128237E+02 | -8.660630E+02
+     2 |       20 | -8.368675E+02 | -8.832010E+02
+     3 |       30 | -8.536851E+02 | -9.031005E+02
+     4 |       40 | -8.691068E+02 | -9.110713E+02
+     5 |       50 | -8.845428E+02 | -9.297380E+02
+Position before: [-15.51552347  19.86664468]
+random vec[-0.73127151  0.69486747], dist: 24.21014554136117
+New Pos: [-15.72695964  20.06755518]
+Target is now at [-15.72695964  20.06755518]
+Run 2
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -1.513675E+03 | -1.585423E+03
+     2 |       20 | -1.548728E+03 | -1.639362E+03
+     3 |       30 | -1.574452E+03 | -1.639362E+03
+     4 |       40 | -1.598056E+03 | -1.660171E+03
+     5 |       50 | -1.608985E+03 | -1.660171E+03
+Position before: [-15.72695964  20.06755518]
+random vec[-0.73127151  0.69486747], dist: 24.498401810839404
+New Pos: [-15.93590799  20.26610169]
+Target is now at [-15.93590799  20.26610169]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 3
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -1.656396E+02 | -1.751602E+02
+     2 |       20 | -1.714028E+02 | -1.843906E+02
+     3 |       30 | -1.773612E+02 | -1.953673E+02
+     4 |       40 | -1.872655E+02 | -2.088749E+02
+     5 |       50 | -1.924798E+02 | -2.088749E+02
+Position before: [-15.93590799  20.26610169]
+random vec[-0.73127151  0.69486747], dist: 24.783344794764385
+New Pos: [-16.14245398  20.46236545]
+Target is now at [-16.14245398  20.46236545]
+Run 4
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -4.739676E+02 | -1.093762E+03
+     2 |       20 | -7.712348E+02 | -1.093762E+03
+     3 |       30 | -9.934210E+02 | -1.093762E+03
+     4 |       40 | -1.001855E+03 | -1.120822E+03
+     5 |       50 | -1.008657E+03 | -1.120822E+03
+Position before: [-16.14245398  20.46236545]
+random vec[-0.73127151  0.69486747], dist: 25.065085702551194
+New Pos: [-16.34667832  20.65642312]
+Target is now at [-16.34667832  20.65642312]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 5
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -7.745420E+01 | -8.921527E+01
+     2 |       20 | -1.298124E+02 | -5.612108E+02
+     3 |       30 | -3.228572E+02 | -5.758666E+02
+     4 |       40 | -3.734073E+02 | -5.792435E+02
+     5 |       50 | -4.740269E+02 | -5.872675E+02
+Position before: [-16.34667832  20.65642312]
+random vec[-0.73127151  0.69486747], dist: 25.343729675536373
+New Pos: [-16.5486573   20.84834722]
+Target is now at [-16.5486573   20.84834722]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 6
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -7.629460E+01 | -8.393794E+01
+     2 |       20 | -7.974600E+01 | -8.819472E+01
+     3 |       30 | -8.277735E+01 | -8.819472E+01
+     4 |       40 | -8.404300E+01 | -8.819472E+01
+     5 |       50 | -8.531619E+01 | -8.819472E+01
+Position before: [-16.5486573   20.84834722]
+random vec[-0.73127151  0.69486747], dist: 25.619376239635308
+New Pos: [-16.74846312  21.03820634]
+Target is now at [-16.74846312  21.03820634]
+Run 7
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -5.555231E+02 | -6.293531E+02
+     2 |       20 | -6.063465E+02 | -6.293531E+02
+     3 |       30 | -6.149759E+02 | -6.304841E+02
+     4 |       40 | -6.235631E+02 | -6.438955E+02
+     5 |       50 | -6.274455E+02 | -6.438955E+02
+Position before: [-16.74846312  21.03820634]
+random vec[-0.73127151  0.69486747], dist: 25.892119715569258
+New Pos: [-16.94616423  21.22606552]
+Target is now at [-16.94616423  21.22606552]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 8
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -4.483823E+02 | -5.070873E+02
+     2 |       20 | -4.952758E+02 | -5.071333E+02
+     3 |       30 | -5.023853E+02 | -5.099825E+02
+     4 |       40 | -5.039650E+02 | -5.099825E+02
+     5 |       50 | -5.111722E+02 | -5.307810E+02
+Position before: [-16.94616423  21.22606552]
+random vec[-0.73127151  0.69486747], dist: 26.162049591416096
+New Pos: [-17.14182552  21.41198644]
+Target is now at [-17.14182552  21.41198644]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 9
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -2.209253E+01 | -7.468462E+01
+     2 |       20 | -2.209253E+01 | -7.468462E+01
+     3 |       30 | -5.651127E+01 | -4.188720E+02
+     4 |       40 | -5.651127E+01 | -4.188720E+02
+     5 |       50 | -5.651127E+01 | -4.188720E+02
+Position before: [-17.14182552  21.41198644]
+random vec[-0.73127151  0.69486747], dist: 26.429250861623046
+New Pos: [-17.33550867  21.59602768]
+Target is now at [-17.33550867  21.59602768]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 10
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -4.015612E+01 | -1.090300E+02
+     2 |       20 | -4.125288E+01 | -1.090300E+02
+     3 |       30 | -4.202427E+01 | -1.090300E+02
+     4 |       40 | -4.202427E+01 | -1.090300E+02
+     5 |       50 | -7.615937E+01 | -3.538397E+02
+Position before: [-17.33550867  21.59602768]
+random vec[-0.73127151  0.69486747], dist: 26.693804336093457
+New Pos: [-17.5272723   21.77824496]
+Target is now at [-17.5272723   21.77824496]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 11
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -1.111165E+02 | -2.721977E+02
+     2 |       20 | -1.444146E+02 | -2.773125E+02
+     3 |       30 | -1.731945E+02 | -3.039313E+02
+     4 |       40 | -1.731945E+02 | -3.039313E+02
+     5 |       50 | -1.754957E+02 | -3.039313E+02
+Position before: [-17.5272723   21.77824496]
+random vec[-0.73127151  0.69486747], dist: 26.9557869225097
+New Pos: [-17.71717217  21.95869127]
+Target is now at [-17.71717217  21.95869127]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 12
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 | -3.380681E+01 | -2.614295E+02
+     4 |       40 | -3.382267E+01 | -2.614295E+02
+     5 |       50 | -3.430658E+01 | -2.614295E+02
+Position before: [-17.71717217  21.95869127]
+random vec[-0.73127151  0.69486747], dist: 27.215271884667143
+New Pos: [-17.90526144  22.13741711]

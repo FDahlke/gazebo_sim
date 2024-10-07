@@ -1,0 +1,23 @@
+ant11
+32
+
+ArgumentError: activate does not accept more than one argument:
+['python', 'py100Forest.py', '--numDrones', '10', '--popSize', '10', '--numGenerations', '10', '--maxRuns', '50', '--movementType', '1']
+
+
+no change     /root/miniconda/condabin/conda
+no change     /root/miniconda/bin/conda
+no change     /root/miniconda/bin/conda-env
+no change     /root/miniconda/bin/activate
+no change     /root/miniconda/bin/deactivate
+no change     /root/miniconda/etc/profile.d/conda.sh
+no change     /root/miniconda/etc/fish/conf.d/conda.fish
+no change     /root/miniconda/shell/condabin/Conda.psm1
+no change     /root/miniconda/shell/condabin/conda-hook.ps1
+no change     /root/miniconda/lib/python3.12/site-packages/xontrib/conda.xsh
+no change     /root/miniconda/etc/profile.d/conda.csh
+no change     /home/fdahlke/.bashrc
+No action taken.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 1211748 ON ant11 CANCELLED AT 2024-09-24T23:16:29 DUE TO TIME LIMIT ***
+slurmstepd: error: *** STEP 1211748.2 ON ant11 CANCELLED AT 2024-09-24T23:16:29 DUE TO TIME LIMIT ***
