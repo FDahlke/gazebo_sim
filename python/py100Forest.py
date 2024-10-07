@@ -599,8 +599,14 @@ while runNumber<maxRuns:
     #print(f"Waypoints: {waypoints}")
     
     #if the target was seen
-    if best_aux:
+    if (not firstDetection) and best_aux:
         firstDetection=runNumber
+        print("Target Seen!\nUpdating target Position and resetting Sigma")
+        sigma = TARGET_STEPSIZE
+        Last_Known_Position= Target_Position
+        
+        targetDetections.append(1)
+    elif best_aux:
         print("Target Seen!\nUpdating target Position and resetting Sigma")
         sigma = TARGET_STEPSIZE
         Last_Known_Position= Target_Position
