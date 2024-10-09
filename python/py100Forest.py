@@ -583,7 +583,7 @@ while runNumber<maxRuns:
     #update Target Position
     if MOVEMENT_TYPE:
         if(MOVEMENT_TYPE == 2):
-            Target_Position= update_Target_Position_random(Target_Position):
+            Target_Position= update_Target_Position_random(Target_Position)
         else:
             Target_Position = update_Target_Position_line(Target_Position)
         print(f"Target is now at {Target_Position}")
