@@ -161,6 +161,7 @@ def update_Target_Position_random(Target_Position):
     random_vec = np.array([new_x,new_y])
     print(f"random vec{random_vec}, dist: {dist}")
     newPos = Target_Position+((random_vec/dist)*TARGET_STEPSIZE)
+    newPos = np.clip(newPos, -40, 40)
     print(f"New Pos: {newPos}")
     return newPos
 
@@ -581,7 +582,10 @@ while runNumber<maxRuns:
     
     #update Target Position
     if MOVEMENT_TYPE:
-        Target_Position = updateTargetPosition(Target_Position)
+        if(MOVEMENT_TYPE == 2):
+            Target_Position= update_Target_Position_random(Target_Position):
+        else:
+            Target_Position = update_Target_Position_line(Target_Position)
         print(f"Target is now at {Target_Position}")
     
     dronePath.append(np.array([waypoints]))
