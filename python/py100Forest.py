@@ -451,11 +451,11 @@ class MyProblem(Problem):
         #adds a 0 for height to the coordinates
         padded_coordiantes = np.pad(coordinates,((0, 0), (0, 1)),mode='constant',constant_values=0)
         
-        #limits drone movement to area
-        padded_coordiantes = np.clip(padded_coordiantes, -GRID_SIZE/2, GRID_SIZE/2)
-        
+
         #tiles the waypoints and adds the moves, then sends all waypoints(NUM_DRONES*POPULATION_SIZE) to the simulation
         tempWaypoints = np.tile(waypoints,(POPULATION_SIZE,1)) + padded_coordiantes
+        #limits drone movement to area
+        tempWaypoints = np.clip(tempWaypoints, -GRID_SIZE/2, GRID_SIZE/2)
         swarm.waypoints(ids,tempWaypoints)
         
         isScored = False
@@ -582,6 +582,8 @@ while runNumber<maxRuns:
     
     #update waypoints
     waypoints = waypoints + np.pad(best_solution,((0, 0), (0, 1)),mode='constant',constant_values=0)
+    waypoints = np.clip(waypoints, -GRID_SIZE/2, GRID_SIZE/2)
+    #limits drone movement to area
     
     #update Target Position
     if MOVEMENT_TYPE:
