@@ -5,7 +5,7 @@
 #SBATCH --ntasks=1
 #SBATCH --mem-per-cpu=2G
 #SBATCH --cpus-per-task=24
-#SBATCH --output=../logs/test_dense_Forest/log_%A_%a.log    
+#SBATCH --output=../logs/test_dense_Forest_static/log_%A_%a.log    
 #SBATCH --exclude=ant5,ant12 
 #SBATCH --array=0-4
 
@@ -18,4 +18,4 @@ srun echo $GZ_DISCOVERY_MSG_PORT
 srun echo $GZ_DISCOVERY_SRV_PORT    
 
 echo srun apptainer exec ../apptainer/gazebo_sim-full.sif python py100Forest.py --numDrones $((NUM_DRONES)) --popSize 10 --numGenerations 20 --maxRuns 50 --movementType $((MOVEMENT_TYPE)) --worldFile world100ForestDense
-srun apptainer exec ../apptainer/gazebo_sim-full.sif python py100Forest.py --numDrones $((NUM_DRONES)) --popSize 10 --numGenerations 20 --maxRuns 50 --movementType $((MOVEMENT_TYPE)) --worldFile world100ForestDense
+srun apptainer exec ../apptainer/gazebo_sim-full.sif python py100Forest.py --numDrones $((NUM_DRONES)) --popSize 10 --numGenerations 5 --maxRuns 50 --movementType $((MOVEMENT_TYPE)) --worldFile world100ForestDense
