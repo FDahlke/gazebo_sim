@@ -1,0 +1,200 @@
+ant10
+24
+20419
+20420
+srun apptainer exec ../apptainer/gazebo_sim-full.sif python py100Forest.py --numDrones 20 --popSize 10 --numGenerations 20 --maxRuns 50 --movementType 0 --worldFile world100ForestDense
+
+ArgumentError: activate does not accept more than one argument:
+['python', 'py100Forest.py', '--numDrones', '20', '--popSize', '10', '--numGenerations', '20', '--maxRuns', '50', '--movementType', '0', '--worldFile', 'world100ForestDense']
+
+
+no change     /root/miniconda/condabin/conda
+no change     /root/miniconda/bin/conda
+no change     /root/miniconda/bin/conda-env
+no change     /root/miniconda/bin/activate
+no change     /root/miniconda/bin/deactivate
+no change     /root/miniconda/etc/profile.d/conda.sh
+no change     /root/miniconda/etc/fish/conf.d/conda.fish
+no change     /root/miniconda/shell/condabin/Conda.psm1
+no change     /root/miniconda/shell/condabin/conda-hook.ps1
+no change     /root/miniconda/lib/python3.12/site-packages/xontrib/conda.xsh
+no change     /root/miniconda/etc/profile.d/conda.csh
+no change     /home/fdahlke/.bashrc
+No action taken.
+/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/problem.py:263: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  v = np.array(v)
+/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/problem.py:263: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  v = np.array(v)
+Subscribed successfully
+Trying to spawn 200 Drones
+Sim not ready after 0 minutes, sleeping for 1 minute
+Request to spawn drones timed out!
+Drones Spawned Sucessfully
+Target is at position [-34.74752368 -27.00393014]
+Target is moving towards [22.26773902 39.94647282] (Distance: 87.9380272546198) with vector [4.53850116 5.32935336]
+
+Compiled modules for significant speedup can not be used!
+https://pymoo.org/installation.html#installation
+
+To disable this warning:
+from pymoo.config import Config
+Config.warnings['not_compiled'] = False
+
+Starting now, at 62.18129754066467
+Run 1
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -6.924918E+00 | -8.685965E+00
+     2 |       20 | -7.896638E+00 | -9.697470E+00
+     3 |       30 | -8.512961E+00 | -9.697470E+00
+     4 |       40 | -8.839748E+00 | -1.012181E+01
+     5 |       50 | -8.976082E+00 | -1.012181E+01
+     6 |       60 | -9.806376E+00 | -1.128086E+01
+     7 |       70 | -1.030590E+01 | -1.128086E+01
+     8 |       80 | -1.071366E+01 | -1.187684E+01
+     9 |       90 | -1.092720E+01 | -1.265584E+01
+    10 |      100 | -1.148324E+01 | -1.265584E+01
+    11 |      110 | -1.174186E+01 | -1.265584E+01
+    12 |      120 | -1.202997E+01 | -1.265584E+01
+    13 |      130 | -1.211633E+01 | -1.265584E+01
+    14 |      140 | -1.224872E+01 | -1.265584E+01
+    15 |      150 | -1.241874E+01 | -1.312136E+01
+    16 |      160 | -1.264477E+01 | -1.315290E+01
+    17 |      170 | -1.300416E+01 | -1.414717E+01
+    18 |      180 | -1.333959E+01 | -1.414717E+01
+    19 |      190 | -1.347664E+01 | -1.421816E+01
+    20 |      200 | -1.376338E+01 | -1.494377E+01
+Run 2
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -9.937783E+02 | -4.870917E+03
+     2 |       20 | -1.940982E+03 | -4.921562E+03
+     3 |       30 | -2.421020E+03 | -4.921562E+03
+     4 |       40 | -2.897351E+03 | -4.921562E+03
+     5 |       50 | -3.894910E+03 | -4.939491E+03
+     6 |       60 | -3.912182E+03 | -4.939491E+03
+     7 |       70 | -4.421498E+03 | -5.049294E+03
+     8 |       80 | -4.422961E+03 | -5.049294E+03
+     9 |       90 | -4.431632E+03 | -5.049294E+03
+    10 |      100 | -4.432735E+03 | -5.049294E+03
+    11 |      110 | -4.943093E+03 | -5.081533E+03
+    12 |      120 | -4.948552E+03 | -5.081533E+03
+    13 |      130 | -4.956875E+03 | -5.081533E+03
+    14 |      140 | -4.967009E+03 | -5.081533E+03
+    15 |      150 | -4.999108E+03 | -5.101146E+03
+    16 |      160 | -4.999108E+03 | -5.101146E+03
+    17 |      170 | -5.012011E+03 | -5.101146E+03
+    18 |      180 | -5.012011E+03 | -5.101146E+03
+    19 |      190 | -5.012011E+03 | -5.101146E+03
+    20 |      200 | -5.019930E+03 | -5.134835E+03
+Target Seen!
+Updating target Position and resetting Sigma
+Run 3
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -2.461547E+03 | -3.166729E+03
+     2 |       20 | -2.798374E+03 | -3.166729E+03
+     3 |       30 | -3.147172E+03 | -3.225375E+03
+     4 |       40 | -3.185756E+03 | -3.233330E+03
+     5 |       50 | -3.200168E+03 | -3.239020E+03
+     6 |       60 | -3.229212E+03 | -3.267223E+03
+     7 |       70 | -3.232470E+03 | -3.269179E+03
+     8 |       80 | -3.246214E+03 | -3.292169E+03
+     9 |       90 | -3.251156E+03 | -3.292169E+03
+    10 |      100 | -3.258850E+03 | -3.292169E+03
+    11 |      110 | -3.263737E+03 | -3.292169E+03
+    12 |      120 | -3.267480E+03 | -3.292169E+03
+    13 |      130 | -3.282411E+03 | -3.323560E+03
+    14 |      140 | -3.289212E+03 | -3.323560E+03
+    15 |      150 | -3.296287E+03 | -3.331354E+03
+    16 |      160 | -3.307510E+03 | -3.331354E+03
+    17 |      170 | -3.314479E+03 | -3.331354E+03
+    18 |      180 | -3.317489E+03 | -3.331354E+03
+    19 |      190 | -3.322138E+03 | -3.345556E+03
+    20 |      200 | -3.328916E+03 | -3.349801E+03
+Target Seen!
+Updating target Position and resetting Sigma
+Time limit reached, stopping
+Drone Path:
+[array([[[-15.19519799, -13.28890259,  35.        ],
+        [-22.27335911, -13.91577733,  35.        ],
+        [-20.93903119, -13.99002423,  35.        ],
+        [-11.28186783,  -9.09788835,  35.        ],
+        [-15.21579928, -14.55476242,  35.        ],
+        [-15.80991053, -13.53748644,  35.        ],
+        [  8.04813463, -11.14718519,  35.        ],
+        [-16.51507338,  -6.99646467,  35.        ],
+        [ 11.44383498,  -6.40779851,  35.        ],
+        [ 13.85056297,   0.42921032,  35.        ],
+        [ 14.90083633,   0.30325589,  35.        ],
+        [ 15.0457348 ,  -8.58574989,  35.        ],
+        [-11.28467269, -14.28535528,  35.        ],
+        [ 15.39543017,   0.18455923,  35.        ],
+        [ 14.62770657,  -9.30586761,  35.        ],
+        [  0.24624539, -13.16890668,  35.        ],
+        [  8.12436826,   0.11893846,  35.        ],
+        [ 13.75862275,   9.83492417,  35.        ],
+        [ 22.11063744, -14.84888996,  35.        ],
+        [ 17.61960874,   4.53303099,  35.        ]]]), array([[[ -3.64098564, -23.6246325 ,  35.        ],
+        [ -7.99808004,   1.0766209 ,  35.        ],
+        [ -9.82139788, -16.35654524,  35.        ],
+        [  0.45277966,   1.72339635,  35.        ],
+        [ -9.14169445, -15.60626124,  35.        ],
+        [ -4.05767661, -26.78542858,  35.        ],
+        [ -6.25919422, -21.99021849,  35.        ],
+        [-31.16608178, -19.57482418,  35.        ],
+        [ 25.64168413,  -9.98915582,  35.        ],
+        [ -0.5642368 , -14.13680879,  35.        ],
+        [  4.71297579,  -2.21145139,  35.        ],
+        [ 27.58482037, -16.63556805,  35.        ],
+        [-26.26702601, -23.73066934,  35.        ],
+        [ 14.89587978,   6.470697  ,  35.        ],
+        [ -0.04420534,   0.61633863,  35.        ],
+        [-14.33506076, -24.41031707,  35.        ],
+        [  3.01503271, -10.18973342,  35.        ],
+        [  6.13739566,   4.71360661,  35.        ],
+        [  7.1106873 , -12.69209171,  35.        ],
+        [ 28.00701407,  15.58674558,  35.        ]]]), array([[[  7.14760538, -35.08952112,  35.        ],
+        [  0.1342229 ,  12.43098282,  35.        ],
+        [-24.78088959,  -1.58611379,  35.        ],
+        [ -4.15493506,  15.98243907,  35.        ],
+        [-13.21477032, -29.95317204,  35.        ],
+        [-17.6254891 , -12.45800655,  35.        ],
+        [-20.56227231, -34.85407634,  35.        ],
+        [-18.04882323, -24.32776785,  35.        ],
+        [ 32.49501304, -23.37630231,  35.        ],
+        [-15.53811393, -15.69363764,  35.        ],
+        [ 13.72279904,  -4.16532941,  35.        ],
+        [ 29.5713707 , -31.24745082,  35.        ],
+        [-39.24406598, -16.30960848,  35.        ],
+        [  0.72369733,  17.92250866,  35.        ],
+        [-13.3349055 , -11.1558789 ,  35.        ],
+        [-20.92986714,  -9.63822127,  35.        ],
+        [ 17.4118481 ,   1.67005292,  35.        ],
+        [  9.98130976,   8.34895989,  35.        ],
+        [ -7.37920848, -15.04804217,  35.        ],
+        [ 32.46535482,   1.13597097,  35.        ]]])]
+
+
+
+
+
+
+Target was first detected in Step 2
+Target Detections: [0.0, 1.0, 1.0]
+Target was detected in 100.0% of the following timesteps
+
+
+Solution Scores:
+[-14.94376980656443, -5134.834729358305, -3349.8012051945198]
+the average evaluation time per generation was 1407.1857646226883 seconds
+the average waypointTimings was 1293.221752802531 seconds
+the average overlapTimings per Solution Individual was 11.100914719104766 seconds
+the average scoringTimings per Solution Individual was 0.28965752840042114 seconds
+Total Time for 3 timestep was 84499.38729143143 seconds
+gz sim server killed
+gz sim gui killed
+gz sim killed
