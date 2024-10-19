@@ -1,0 +1,220 @@
+ant13
+32
+20419
+20420
+srun apptainer exec ../apptainer/gazebo_sim-full.sif python py100Forest.py --numDrones 20 --popSize 10 --numGenerations 5 --maxRuns 50 --movementType 0 --worldFile world100ForestSparse
+
+ArgumentError: activate does not accept more than one argument:
+['python', 'py100Forest.py', '--numDrones', '20', '--popSize', '10', '--numGenerations', '5', '--maxRuns', '50', '--movementType', '0', '--worldFile', 'world100ForestSparse']
+
+
+no change     /root/miniconda/condabin/conda
+no change     /root/miniconda/bin/conda
+no change     /root/miniconda/bin/conda-env
+no change     /root/miniconda/bin/activate
+no change     /root/miniconda/bin/deactivate
+no change     /root/miniconda/etc/profile.d/conda.sh
+no change     /root/miniconda/etc/fish/conf.d/conda.fish
+no change     /root/miniconda/shell/condabin/Conda.psm1
+no change     /root/miniconda/shell/condabin/conda-hook.ps1
+no change     /root/miniconda/lib/python3.12/site-packages/xontrib/conda.xsh
+no change     /root/miniconda/etc/profile.d/conda.csh
+no change     /home/fdahlke/.bashrc
+No action taken.
+/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/problem.py:263: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  v = np.array(v)
+/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/problem.py:263: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  v = np.array(v)
+Subscribed successfully
+Trying to spawn 200 Drones
+Sim not ready after 0 minutes, sleeping for 1 minute
+Request to spawn drones timed out!
+Drones Spawned Sucessfully
+Target is at position [ 32.12676527 -22.25471123]
+Target is moving towards [-26.59557769  29.29061204] (Distance: 78.13599628110735) with vector [-5.26078146  4.617811  ]
+
+Compiled modules for significant speedup can not be used!
+https://pymoo.org/installation.html#installation
+
+To disable this warning:
+from pymoo.config import Config
+Config.warnings['not_compiled'] = False
+
+Starting now, at 61.70651602745056
+Run 1
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -1.006516E+02 | -1.144580E+02
+     2 |       20 | -1.026350E+02 | -1.144580E+02
+     3 |       30 | -1.092896E+02 | -1.154773E+02
+     4 |       40 | -1.134714E+02 | -1.188268E+02
+     5 |       50 | -1.137336E+02 | -1.188268E+02
+Run 2
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -5.334425E+02 | -5.660180E+02
+     2 |       20 | -5.459578E+02 | -5.660180E+02
+     3 |       30 | -5.523988E+02 | -5.660180E+02
+     4 |       40 | -5.637169E+02 | -5.844843E+02
+     5 |       50 | -5.674038E+02 | -5.891562E+02
+Run 3
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -6.178463E+02 | -6.670860E+02
+     2 |       20 | -6.346798E+02 | -6.854613E+02
+     3 |       30 | -6.504570E+02 | -6.854613E+02
+     4 |       40 | -6.529211E+02 | -6.854613E+02
+     5 |       50 | -6.613821E+02 | -6.854613E+02
+Run 4
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -5.308775E+02 | -5.669427E+02
+     2 |       20 | -5.520893E+02 | -5.764501E+02
+     3 |       30 | -5.621926E+02 | -5.764501E+02
+     4 |       40 | -5.666243E+02 | -5.764501E+02
+     5 |       50 | -5.668643E+02 | -5.776363E+02
+Run 5
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -4.783837E+02 | -4.948202E+02
+     2 |       20 | -4.846801E+02 | -5.120622E+02
+     3 |       30 | -4.890138E+02 | -5.120622E+02
+     4 |       40 | -4.890138E+02 | -5.120622E+02
+     5 |       50 | -4.890138E+02 | -5.120622E+02
+Run 6
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -8.657235E+01 | -1.202792E+02
+     2 |       20 | -8.657235E+01 | -1.202792E+02
+     3 |       30 | -1.712429E+02 | -3.819236E+02
+     4 |       40 | -1.712429E+02 | -3.819236E+02
+     5 |       50 | -1.723913E+02 | -3.819236E+02
+Run 7
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -1.090437E+02 | -4.081240E+02
+     2 |       20 | -1.764788E+02 | -4.081240E+02
+     3 |       30 | -1.764788E+02 | -4.081240E+02
+     4 |       40 | -1.764788E+02 | -4.081240E+02
+     5 |       50 | -1.783995E+02 | -4.081240E+02
+Run 8
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 | -9.871075E+01 | -2.200554E+02
+     3 |       30 | -1.002143E+02 | -2.200554E+02
+     4 |       40 | -1.086029E+02 | -2.680618E+02
+     5 |       50 | -1.106522E+02 | -2.680618E+02
+Run 9
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -5.402427E+01 | -1.805691E+02
+     2 |       20 | -5.809515E+01 | -1.805691E+02
+     3 |       30 | -5.898445E+01 | -1.805691E+02
+     4 |       40 | -5.947807E+01 | -1.805691E+02
+     5 |       50 | -6.170096E+01 | -1.805691E+02
+Run 10
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -5.844019E+01 | -1.646222E+02
+     2 |       20 | -6.223084E+01 | -1.646222E+02
+     3 |       30 | -6.397496E+01 | -1.646222E+02
+     4 |       40 | -6.484024E+01 | -1.646222E+02
+     5 |       50 | -6.484024E+01 | -1.646222E+02
+Run 11
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -3.518208E+01 | -1.069679E+02
+     2 |       20 | -3.821387E+01 | -1.069679E+02
+     3 |       30 | -3.878228E+01 | -1.069679E+02
+     4 |       40 | -4.008771E+01 | -1.069679E+02
+     5 |       50 | -4.059355E+01 | -1.069679E+02
+Run 12
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -2.625309E+01 | -7.605649E+01
+     2 |       20 | -2.625309E+01 | -7.605649E+01
+     3 |       30 | -2.625309E+01 | -7.605649E+01
+     4 |       40 | -2.625309E+01 | -7.605649E+01
+     5 |       50 | -2.625309E+01 | -7.605649E+01
+Run 13
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Run 14
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Run 15
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Run 16
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Run 17
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Run 18
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+Traceback (most recent call last):
+  File "py100Forest.py", line 577, in <module>
+    res = minimize(problem, algorithm, termination, seed=1, verbose=True)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/optimize.py", line 67, in minimize
+    res = algorithm.run()
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/algorithm.py", line 138, in run
+    self.next()
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/algorithm.py", line 158, in next
+    self.evaluator.eval(self.problem, infills, algorithm=self)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/evaluator.py", line 69, in eval
+    self._eval(problem, pop[I], evaluate_values_of, **kwargs)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/evaluator.py", line 90, in _eval
+    out = problem.evaluate(X, return_values_of=evaluate_values_of, return_as_dictionary=True, **kwargs)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/problem.py", line 263, in evaluate
+    v = np.array(v)
+ValueError: could not broadcast input array from shape (2081,2081) into shape (2081,)
+INFO:    Terminating squashfuse_ll after timeout
+INFO:    Timeouts can be caused by a running background process
+srun: error: ant13: task 0: Exited with exit code 1
