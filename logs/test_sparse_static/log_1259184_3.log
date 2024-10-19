@@ -1,0 +1,222 @@
+ant17
+32
+20423
+20424
+srun apptainer exec ../apptainer/gazebo_sim-full.sif python py100Forest.py --numDrones 20 --popSize 10 --numGenerations 5 --maxRuns 50 --movementType 0 --worldFile world100ForestSparse
+
+ArgumentError: activate does not accept more than one argument:
+['python', 'py100Forest.py', '--numDrones', '20', '--popSize', '10', '--numGenerations', '5', '--maxRuns', '50', '--movementType', '0', '--worldFile', 'world100ForestSparse']
+
+
+no change     /root/miniconda/condabin/conda
+no change     /root/miniconda/bin/conda
+no change     /root/miniconda/bin/conda-env
+no change     /root/miniconda/bin/activate
+no change     /root/miniconda/bin/deactivate
+no change     /root/miniconda/etc/profile.d/conda.sh
+no change     /root/miniconda/etc/fish/conf.d/conda.fish
+no change     /root/miniconda/shell/condabin/Conda.psm1
+no change     /root/miniconda/shell/condabin/conda-hook.ps1
+no change     /root/miniconda/lib/python3.12/site-packages/xontrib/conda.xsh
+no change     /root/miniconda/etc/profile.d/conda.csh
+no change     /home/fdahlke/.bashrc
+No action taken.
+/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/problem.py:263: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  v = np.array(v)
+/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/problem.py:263: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  v = np.array(v)
+Subscribed successfully
+Trying to spawn 200 Drones
+Sim not ready after 0 minutes, sleeping for 1 minute
+Request to spawn drones timed out!
+Drones Spawned Sucessfully
+Target is at position [-30.32586204 -31.94418415]
+Target is moving towards [ 8.19600468 31.45418685] (Distance: 74.18414696532588) with vector [3.63491498 5.98225652]
+
+Compiled modules for significant speedup can not be used!
+https://pymoo.org/installation.html#installation
+
+To disable this warning:
+from pymoo.config import Config
+Config.warnings['not_compiled'] = False
+
+Starting now, at 61.68816781044006
+Run 1
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -4.247090E+01 | -4.616779E+01
+     2 |       20 | -4.362095E+01 | -4.616779E+01
+     3 |       30 | -4.429164E+01 | -4.616779E+01
+     4 |       40 | -4.473829E+01 | -4.786543E+01
+     5 |       50 | -4.560196E+01 | -4.786543E+01
+Run 2
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -3.964917E+02 | -4.208169E+02
+     2 |       20 | -8.191759E+02 | -4.567691E+03
+     3 |       30 | -1.231248E+03 | -4.567691E+03
+     4 |       40 | -1.662236E+03 | -4.723886E+03
+     5 |       50 | -2.105719E+03 | -4.723886E+03
+Target Seen!
+Updating target Position and resetting Sigma
+Run 3
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -1.931754E+03 | -3.236258E+03
+     2 |       20 | -2.245688E+03 | -3.236258E+03
+     3 |       30 | -2.892891E+03 | -3.406612E+03
+     4 |       40 | -3.199563E+03 | -3.406612E+03
+     5 |       50 | -3.226413E+03 | -3.406612E+03
+Target Seen!
+Updating target Position and resetting Sigma
+Run 4
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -2.644326E+03 | -2.779772E+03
+     2 |       20 | -2.662649E+03 | -2.804727E+03
+     3 |       30 | -2.707643E+03 | -2.804727E+03
+     4 |       40 | -2.724686E+03 | -2.804727E+03
+     5 |       50 | -2.755947E+03 | -2.820512E+03
+Target Seen!
+Updating target Position and resetting Sigma
+Run 5
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -2.518519E+03 | -2.649096E+03
+     2 |       20 | -2.572678E+03 | -2.680897E+03
+     3 |       30 | -2.572678E+03 | -2.680897E+03
+     4 |       40 | -2.573050E+03 | -2.680897E+03
+     5 |       50 | -2.573050E+03 | -2.680897E+03
+Target Seen!
+Updating target Position and resetting Sigma
+Run 6
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -4.639334E+02 | -2.253322E+03
+     2 |       20 | -4.664288E+02 | -2.253322E+03
+     3 |       30 | -4.682237E+02 | -2.253322E+03
+     4 |       40 | -4.684334E+02 | -2.253322E+03
+     5 |       50 | -4.750621E+02 | -2.319609E+03
+Target Seen!
+Updating target Position and resetting Sigma
+Run 7
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -1.605558E+03 | -1.902365E+03
+     2 |       20 | -1.605558E+03 | -1.902365E+03
+     3 |       30 | -1.605558E+03 | -1.902365E+03
+     4 |       40 | -1.609115E+03 | -1.902365E+03
+     5 |       50 | -1.609115E+03 | -1.902365E+03
+Target Seen!
+Updating target Position and resetting Sigma
+Run 8
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -3.818976E+02 | -1.821782E+03
+     2 |       20 | -3.874613E+02 | -1.821782E+03
+     3 |       30 | -3.892211E+02 | -1.821782E+03
+     4 |       40 | -3.943885E+02 | -1.821782E+03
+     5 |       50 | -3.944366E+02 | -1.821782E+03
+Target Seen!
+Updating target Position and resetting Sigma
+Run 9
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -1.010555E+03 | -1.611939E+03
+     2 |       20 | -1.146155E+03 | -1.611939E+03
+     3 |       30 | -1.287101E+03 | -1.612755E+03
+     4 |       40 | -1.420166E+03 | -1.612755E+03
+     5 |       50 | -1.425004E+03 | -1.612755E+03
+Target Seen!
+Updating target Position and resetting Sigma
+Run 10
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -3.332544E+02 | -1.630179E+03
+     2 |       20 | -3.367180E+02 | -1.630179E+03
+     3 |       30 | -3.369628E+02 | -1.630179E+03
+     4 |       40 | -4.946816E+02 | -1.630179E+03
+     5 |       50 | -4.950078E+02 | -1.630179E+03
+Target Seen!
+Updating target Position and resetting Sigma
+Run 11
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -8.581894E+02 | -1.605035E+03
+     2 |       20 | -1.434809E+03 | -1.605035E+03
+     3 |       30 | -1.434809E+03 | -1.605035E+03
+     4 |       40 | -1.434809E+03 | -1.605035E+03
+     5 |       50 | -1.434809E+03 | -1.605035E+03
+Target Seen!
+Updating target Position and resetting Sigma
+Run 12
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Run 13
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Run 14
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Run 15
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Run 16
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+Traceback (most recent call last):
+  File "py100Forest.py", line 577, in <module>
+    res = minimize(problem, algorithm, termination, seed=1, verbose=True)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/optimize.py", line 67, in minimize
+    res = algorithm.run()
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/algorithm.py", line 138, in run
+    self.next()
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/algorithm.py", line 158, in next
+    self.evaluator.eval(self.problem, infills, algorithm=self)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/evaluator.py", line 69, in eval
+    self._eval(problem, pop[I], evaluate_values_of, **kwargs)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/evaluator.py", line 90, in _eval
+    out = problem.evaluate(X, return_values_of=evaluate_values_of, return_as_dictionary=True, **kwargs)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/problem.py", line 263, in evaluate
+    v = np.array(v)
+ValueError: could not broadcast input array from shape (2081,2081) into shape (2081,)
+INFO:    Terminating squashfuse_ll after timeout
+INFO:    Timeouts can be caused by a running background process
+srun: error: ant17: task 0: Exited with exit code 1
