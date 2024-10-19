@@ -205,3 +205,6 @@ n_gen  |  n_eval  |     f_avg     |     f_min
 =================================================
      1 |       10 |  0.000000E+00 | -0.000000E+00
      2 |       20 |  0.000000E+00 | -0.000000E+00
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 1259192.4 ON ant21 CANCELLED AT 2024-10-19T16:40:03 DUE TO TIME LIMIT ***
+slurmstepd: error: *** JOB 1259192 ON ant21 CANCELLED AT 2024-10-19T16:40:03 DUE TO TIME LIMIT ***

@@ -1,0 +1,215 @@
+ant10
+32
+20371
+20372
+srun apptainer exec ../apptainer/gazebo_sim-full.sif python py100Forest.py --numDrones 10 --popSize 10 --numGenerations 5 --maxRuns 50 --movementType 1 --worldFile world100ForestSparse
+
+ArgumentError: activate does not accept more than one argument:
+['python', 'py100Forest.py', '--numDrones', '10', '--popSize', '10', '--numGenerations', '5', '--maxRuns', '50', '--movementType', '1', '--worldFile', 'world100ForestSparse']
+
+
+no change     /root/miniconda/condabin/conda
+no change     /root/miniconda/bin/conda
+no change     /root/miniconda/bin/conda-env
+no change     /root/miniconda/bin/activate
+no change     /root/miniconda/bin/deactivate
+no change     /root/miniconda/etc/profile.d/conda.sh
+no change     /root/miniconda/etc/fish/conf.d/conda.fish
+no change     /root/miniconda/shell/condabin/Conda.psm1
+no change     /root/miniconda/shell/condabin/conda-hook.ps1
+no change     /root/miniconda/lib/python3.12/site-packages/xontrib/conda.xsh
+no change     /root/miniconda/etc/profile.d/conda.csh
+no change     /home/fdahlke/.bashrc
+No action taken.
+Subscribed successfully
+Trying to spawn 100 Drones
+Sim not ready after 0 minutes, sleeping for 1 minute
+Request to spawn drones timed out!
+Drones Spawned Sucessfully
+Target is at position [ 15.53930689 -27.90455671]
+Target is moving towards [-26.54130166  35.25008988] (Distance: 75.88996640760251) with vector [-3.88146515  5.82530929]
+
+Compiled modules for significant speedup can not be used!
+https://pymoo.org/installation.html#installation
+
+To disable this warning:
+from pymoo.config import Config
+Config.warnings['not_compiled'] = False
+
+Starting now, at 61.76840686798096
+Run 1
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -5.128374E+02 | -5.670905E+02
+     2 |       20 | -5.383819E+02 | -5.760968E+02
+     3 |       30 | -5.492548E+02 | -5.760968E+02
+     4 |       40 | -5.522881E+02 | -5.760968E+02
+     5 |       50 | -5.608813E+02 | -5.760968E+02
+Target is now at [ 11.65784174 -22.07924742]
+Run 2
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -1.264919E+03 | -1.405490E+03
+     2 |       20 | -1.297245E+03 | -1.405490E+03
+     3 |       30 | -1.328423E+03 | -1.424789E+03
+     4 |       40 | -1.355737E+03 | -1.455392E+03
+     5 |       50 | -1.381938E+03 | -1.455392E+03
+Target is now at [  7.77637659 -16.25393814]
+Run 3
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -6.180867E+03 | -6.754103E+03
+     2 |       20 | -6.381166E+03 | -6.754103E+03
+     3 |       30 | -6.542216E+03 | -6.761417E+03
+     4 |       40 | -6.631107E+03 | -6.761417E+03
+     5 |       50 | -6.680754E+03 | -6.976355E+03
+Target is now at [  3.89491144 -10.42862885]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 4
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -6.278590E+03 | -6.667457E+03
+     2 |       20 | -6.422687E+03 | -6.794399E+03
+     3 |       30 | -6.509180E+03 | -6.835951E+03
+     4 |       40 | -6.577612E+03 | -6.835951E+03
+     5 |       50 | -6.686509E+03 | -6.835951E+03
+Target is now at [ 0.01344629 -4.60331956]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 5
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -6.724994E+03 | -7.242470E+03
+     2 |       20 | -6.830211E+03 | -7.242470E+03
+     3 |       30 | -6.965492E+03 | -7.242470E+03
+     4 |       40 | -7.003130E+03 | -7.242470E+03
+     5 |       50 | -7.091210E+03 | -7.346759E+03
+Target is now at [-3.86801886  1.22198973]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 6
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -5.749864E+03 | -6.121671E+03
+     2 |       20 | -5.873262E+03 | -6.274093E+03
+     3 |       30 | -6.001921E+03 | -6.389445E+03
+     4 |       40 | -6.141046E+03 | -6.389445E+03
+     5 |       50 | -6.262673E+03 | -6.391424E+03
+Target is now at [-7.74948401  7.04729901]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 7
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -4.230613E+03 | -4.398088E+03
+     2 |       20 | -4.297252E+03 | -4.456850E+03
+     3 |       30 | -4.386680E+03 | -4.456850E+03
+     4 |       40 | -4.440294E+03 | -4.519223E+03
+     5 |       50 | -4.482837E+03 | -4.662676E+03
+Target is now at [-11.63094916  12.8726083 ]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 8
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -3.674455E+03 | -3.974760E+03
+     2 |       20 | -3.714510E+03 | -3.974760E+03
+     3 |       30 | -3.788683E+03 | -3.974760E+03
+     4 |       40 | -3.830805E+03 | -3.974760E+03
+     5 |       50 | -3.895057E+03 | -3.974760E+03
+Target is now at [-15.51241432  18.69791759]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 9
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -4.342171E+03 | -4.562417E+03
+     2 |       20 | -4.418759E+03 | -4.562417E+03
+     3 |       30 | -4.484913E+03 | -4.562417E+03
+     4 |       40 | -4.530357E+03 | -4.624146E+03
+     5 |       50 | -4.582808E+03 | -4.637841E+03
+Target is now at [-19.39387947  24.52322687]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 10
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -1.210569E+02 | -1.455746E+02
+     2 |       20 | -1.266351E+02 | -1.460966E+02
+     3 |       30 | -1.319625E+02 | -1.460966E+02
+     4 |       40 | -1.386187E+02 | -1.506116E+02
+     5 |       50 | -1.401743E+02 | -1.506116E+02
+Target is now at [-23.27534462  30.34853616]
+Run 11
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -2.247900E+02 | -2.502507E+02
+     2 |       20 | -2.351192E+02 | -2.502507E+02
+     3 |       30 | -2.355779E+02 | -2.502507E+02
+     4 |       40 | -2.355779E+02 | -2.502507E+02
+     5 |       50 | -2.355779E+02 | -2.502507E+02
+Target is now at [-23.27534462  30.34853616]
+Run 12
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -2.403964E+03 | -2.772193E+03
+     2 |       20 | -2.403964E+03 | -2.772193E+03
+     3 |       30 | -2.403964E+03 | -2.772193E+03
+     4 |       40 | -2.403964E+03 | -2.772193E+03
+     5 |       50 | -2.403964E+03 | -2.772193E+03
+Target is now at [-23.27534462  30.34853616]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 13
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -1.882364E+03 | -2.400252E+03
+     2 |       20 | -1.882364E+03 | -2.400252E+03
+     3 |       30 | -1.882364E+03 | -2.400252E+03
+     4 |       40 | -1.882364E+03 | -2.400252E+03
+     5 |       50 | -1.882364E+03 | -2.400252E+03
+Target is now at [-23.27534462  30.34853616]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 14
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -8.296049E+01 | -1.165539E+02
+     2 |       20 | -1.067422E+02 | -1.203710E+02
+     3 |       30 | -1.081252E+02 | -1.242999E+02
+     4 |       40 | -1.081252E+02 | -1.242999E+02
+     5 |       50 | -1.097320E+02 | -1.243704E+02
+Target is now at [-23.27534462  30.34853616]
+Run 15
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -2.470978E+03 | -2.561552E+03
+     2 |       20 | -2.478610E+03 | -2.561552E+03
+     3 |       30 | -2.478610E+03 | -2.561552E+03
+     4 |       40 | -2.478610E+03 | -2.561552E+03
+     5 |       50 | -2.478610E+03 | -2.561552E+03
+Target is now at [-23.27534462  30.34853616]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 16
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
