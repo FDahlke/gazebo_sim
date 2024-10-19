@@ -5,7 +5,7 @@
 #SBATCH --ntasks=1
 #SBATCH --mem-per-cpu=2G
 #SBATCH --cpus-per-task=32
-#SBATCH --output=../logs/test_sparse_static/log_%A_%a.log    
+#SBATCH --output=../logs/test_sparse_line/log_%A_%a.log    
 #SBATCH --exclude=ant5,ant12 
 #SBATCH --array=0-4
 
