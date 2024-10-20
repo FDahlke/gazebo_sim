@@ -1,0 +1,23 @@
+ant15
+32
+20423
+20424
+srun apptainer exec ../apptainer/gazebo_sim-full.sif python py100Forest.py --numDrones 5 --popSize 10 --numGenerations 5 --maxRuns 50 --movementType 0 --worldFile world100Forest
+
+ArgumentError: activate does not accept more than one argument:
+['python', 'py100Forest.py', '--numDrones', '5', '--popSize', '10', '--numGenerations', '5', '--maxRuns', '50', '--movementType', '0', '--worldFile', 'world100Forest']
+
+
+no change     /root/miniconda/condabin/conda
+no change     /root/miniconda/bin/conda
+no change     /root/miniconda/bin/conda-env
+no change     /root/miniconda/bin/activate
+no change     /root/miniconda/bin/deactivate
+no change     /root/miniconda/etc/profile.d/conda.sh
+no change     /root/miniconda/etc/fish/conf.d/conda.fish
+no change     /root/miniconda/shell/condabin/Conda.psm1
+no change     /root/miniconda/shell/condabin/conda-hook.ps1
+no change     /root/miniconda/lib/python3.12/site-packages/xontrib/conda.xsh
+no change     /root/miniconda/etc/profile.d/conda.csh
+no change     /home/fdahlke/.bashrc
+No action taken.
