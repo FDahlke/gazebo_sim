@@ -21,3 +21,296 @@ no change     /root/miniconda/lib/python3.12/site-packages/xontrib/conda.xsh
 no change     /root/miniconda/etc/profile.d/conda.csh
 no change     /home/fdahlke/.bashrc
 No action taken.
+Subscribed successfully
+Trying to spawn 200 Drones
+Sim not ready after 0 minutes, sleeping for 1 minute
+Request to spawn drones timed out!
+Drones Spawned Sucessfully
+Target is at position [-15.36843275 -27.47806518]
+Target is moving towards [32.84873045 28.80107308] (Distance: 74.10962306321323) with vector [4.55433625 5.31582744]
+
+Compiled modules for significant speedup can not be used!
+https://pymoo.org/installation.html#installation
+
+To disable this warning:
+from pymoo.config import Config
+Config.warnings['not_compiled'] = False
+
+Starting now, at 61.723363161087036
+Run 1
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -7.482242E+02 | -8.031836E+02
+     2 |       20 | -7.603885E+02 | -8.031836E+02
+     3 |       30 | -7.736759E+02 | -8.031836E+02
+     4 |       40 | -7.779568E+02 | -8.031836E+02
+     5 |       50 | -7.843516E+02 | -8.194064E+02
+Target is now at [-10.81409651 -22.16223774]
+Run 2
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -6.278298E+03 | -6.584590E+03
+     2 |       20 | -6.396761E+03 | -6.906694E+03
+     3 |       30 | -6.457266E+03 | -6.906694E+03
+     4 |       40 | -6.559784E+03 | -6.906694E+03
+     5 |       50 | -6.634984E+03 | -6.906694E+03
+Target is now at [ -6.25976026 -16.8464103 ]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 3
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -4.834702E+03 | -5.032529E+03
+     2 |       20 | -4.948026E+03 | -5.132161E+03
+     3 |       30 | -5.040993E+03 | -5.332025E+03
+     4 |       40 | -5.123830E+03 | -5.332025E+03
+     5 |       50 | -5.169768E+03 | -5.332025E+03
+Target is now at [ -1.70542402 -11.53058286]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 4
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -5.581093E+03 | -5.802314E+03
+     2 |       20 | -5.641566E+03 | -5.802314E+03
+     3 |       30 | -5.704258E+03 | -6.072036E+03
+     4 |       40 | -5.775976E+03 | -6.072036E+03
+     5 |       50 | -5.805860E+03 | -6.072036E+03
+Target is now at [ 2.84891223 -6.21475542]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 5
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -4.175563E+03 | -4.386483E+03
+     2 |       20 | -4.209562E+03 | -4.386483E+03
+     3 |       30 | -4.306307E+03 | -4.453314E+03
+     4 |       40 | -4.315424E+03 | -4.453314E+03
+     5 |       50 | -4.381501E+03 | -4.523864E+03
+Target is now at [ 7.40324847 -0.89892798]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 6
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -3.886984E+03 | -4.130009E+03
+     2 |       20 | -3.988543E+03 | -4.149059E+03
+     3 |       30 | -4.038116E+03 | -4.149059E+03
+     4 |       40 | -4.087177E+03 | -4.180941E+03
+     5 |       50 | -4.159036E+03 | -4.263034E+03
+Target is now at [11.95758472  4.41689946]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 7
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -3.424521E+03 | -3.575657E+03
+     2 |       20 | -3.492097E+03 | -3.634533E+03
+     3 |       30 | -3.492097E+03 | -3.634533E+03
+     4 |       40 | -3.492097E+03 | -3.634533E+03
+     5 |       50 | -3.492097E+03 | -3.634533E+03
+Target is now at [16.51192096  9.7327269 ]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 8
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 | -3.387621E+02 | -2.958782E+03
+     4 |       40 | -3.387621E+02 | -2.958782E+03
+     5 |       50 | -3.387621E+02 | -2.958782E+03
+Target is now at [21.06625721 15.04855434]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 9
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -2.481541E+02 | -2.317860E+03
+     2 |       20 | -2.481541E+02 | -2.317860E+03
+     3 |       30 | -2.693635E+02 | -2.317860E+03
+     4 |       40 | -2.757550E+02 | -2.317860E+03
+     5 |       50 | -2.797026E+02 | -2.317860E+03
+Target is now at [25.62059346 20.36438178]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 10
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -7.242026E+00 | -1.621925E+01
+     2 |       20 | -7.530130E+00 | -1.621925E+01
+     3 |       30 | -9.092973E+00 | -1.705218E+01
+     4 |       40 | -9.092973E+00 | -1.705218E+01
+     5 |       50 | -9.335290E+00 | -1.705218E+01
+Target is now at [30.1749297  25.68020922]
+Run 11
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -8.659512E+00 | -1.840977E+01
+     2 |       20 | -9.753462E+00 | -1.840977E+01
+     3 |       30 | -3.258406E+01 | -7.669062E+01
+     4 |       40 | -3.376555E+01 | -7.669062E+01
+     5 |       50 | -3.666486E+01 | -7.764767E+01
+Target is now at [30.1749297  25.68020922]
+Run 12
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -3.276311E+01 | -8.961559E+01
+     2 |       20 | -3.381647E+01 | -8.961559E+01
+     3 |       30 | -3.786315E+01 | -8.961559E+01
+     4 |       40 | -3.901809E+01 | -8.961559E+01
+     5 |       50 | -3.937288E+01 | -8.961559E+01
+Target is now at [30.1749297  25.68020922]
+Run 13
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -4.129773E+01 | -8.845733E+01
+     2 |       20 | -4.398148E+01 | -8.845733E+01
+     3 |       30 | -4.479837E+01 | -8.845733E+01
+     4 |       40 | -4.524002E+01 | -8.845733E+01
+     5 |       50 | -4.570500E+01 | -8.845733E+01
+Target is now at [30.1749297  25.68020922]
+Run 14
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -6.205196E+02 | -1.487999E+03
+     2 |       20 | -9.117226E+02 | -1.532003E+03
+     3 |       30 | -1.064839E+03 | -1.535654E+03
+     4 |       40 | -1.217060E+03 | -1.554625E+03
+     5 |       50 | -1.506926E+03 | -1.554625E+03
+Target is now at [30.1749297  25.68020922]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 15
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -1.103442E+01 | -2.512396E+01
+     2 |       20 | -1.232647E+01 | -2.512396E+01
+     3 |       30 | -1.284283E+01 | -2.512396E+01
+     4 |       40 | -1.378653E+01 | -2.518048E+01
+     5 |       50 | -1.394426E+01 | -2.518048E+01
+Target is now at [30.1749297  25.68020922]
+Run 16
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 | -2.171374E+01 | -5.222979E+01
+     2 |       20 | -2.171374E+01 | -5.222979E+01
+     3 |       30 | -2.171374E+01 | -5.222979E+01
+/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/problem.py:263: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  v = np.array(v)
+/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/problem.py:263: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  v = np.array(v)
+     4 |       40 | -2.171374E+01 | -5.222979E+01
+     5 |       50 | -2.171374E+01 | -5.222979E+01
+Target is now at [30.1749297  25.68020922]
+Run 17
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [30.1749297  25.68020922]
+Run 18
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [30.1749297  25.68020922]
+Run 19
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [30.1749297  25.68020922]
+Run 20
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [30.1749297  25.68020922]
+Run 21
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [30.1749297  25.68020922]
+Run 22
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [30.1749297  25.68020922]
+Run 23
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [30.1749297  25.68020922]
+Run 24
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+Traceback (most recent call last):
+  File "py100Forest.py", line 577, in <module>
+    res = minimize(problem, algorithm, termination, seed=1, verbose=True)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/optimize.py", line 67, in minimize
+    res = algorithm.run()
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/algorithm.py", line 138, in run
+    self.next()
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/algorithm.py", line 158, in next
+    self.evaluator.eval(self.problem, infills, algorithm=self)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/evaluator.py", line 69, in eval
+    self._eval(problem, pop[I], evaluate_values_of, **kwargs)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/evaluator.py", line 90, in _eval
+    out = problem.evaluate(X, return_values_of=evaluate_values_of, return_as_dictionary=True, **kwargs)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/problem.py", line 263, in evaluate
+    v = np.array(v)
+ValueError: could not broadcast input array from shape (2081,2081) into shape (2081,)
+INFO:    Terminating squashfuse_ll after timeout
+INFO:    Timeouts can be caused by a running background process
+srun: error: ant11: task 0: Exited with exit code 1

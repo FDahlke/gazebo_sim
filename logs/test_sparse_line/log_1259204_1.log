@@ -215,3 +215,130 @@ Run 16
 =================================================
 n_gen  |  n_eval  |     f_avg     |     f_min    
 =================================================
+/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/problem.py:263: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  v = np.array(v)
+/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/problem.py:263: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  v = np.array(v)
+     1 |       10 | -8.429207E+02 | -1.446980E+03
+     2 |       20 | -1.129614E+03 | -1.447476E+03
+     3 |       30 | -1.272013E+03 | -1.447476E+03
+     4 |       40 | -1.412700E+03 | -1.447476E+03
+     5 |       50 | -1.412700E+03 | -1.447476E+03
+Target is now at [ 31.07943895 -26.8789778 ]
+Target Seen!
+Updating target Position and resetting Sigma
+Run 17
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [ 31.07943895 -26.8789778 ]
+Run 18
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [ 31.07943895 -26.8789778 ]
+Run 19
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [ 31.07943895 -26.8789778 ]
+Run 20
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [ 31.07943895 -26.8789778 ]
+Run 21
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [ 31.07943895 -26.8789778 ]
+Run 22
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [ 31.07943895 -26.8789778 ]
+Run 23
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [ 31.07943895 -26.8789778 ]
+Run 24
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [ 31.07943895 -26.8789778 ]
+Run 25
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+     3 |       30 |  0.000000E+00 | -0.000000E+00
+     4 |       40 |  0.000000E+00 | -0.000000E+00
+     5 |       50 |  0.000000E+00 | -0.000000E+00
+Target is now at [ 31.07943895 -26.8789778 ]
+Run 26
+=================================================
+n_gen  |  n_eval  |     f_avg     |     f_min    
+=================================================
+     1 |       10 |  0.000000E+00 | -0.000000E+00
+     2 |       20 |  0.000000E+00 | -0.000000E+00
+Traceback (most recent call last):
+  File "py100Forest.py", line 577, in <module>
+    res = minimize(problem, algorithm, termination, seed=1, verbose=True)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/optimize.py", line 67, in minimize
+    res = algorithm.run()
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/algorithm.py", line 138, in run
+    self.next()
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/algorithm.py", line 158, in next
+    self.evaluator.eval(self.problem, infills, algorithm=self)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/evaluator.py", line 69, in eval
+    self._eval(problem, pop[I], evaluate_values_of, **kwargs)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/evaluator.py", line 90, in _eval
+    out = problem.evaluate(X, return_values_of=evaluate_values_of, return_as_dictionary=True, **kwargs)
+  File "/root/miniconda/envs/gz-ws/lib/python3.7/site-packages/pymoo/core/problem.py", line 263, in evaluate
+    v = np.array(v)
+ValueError: could not broadcast input array from shape (2081,2081) into shape (2081,)
+INFO:    Terminating squashfuse_ll after timeout
+INFO:    Timeouts can be caused by a running background process
+srun: error: ant11: task 0: Exited with exit code 1
